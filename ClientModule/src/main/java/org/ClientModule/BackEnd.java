@@ -1,6 +1,6 @@
 package org.ClientModule;
 
-
+import org.ServerModule.Sensor;
 
 public class BackEnd {
 	
@@ -19,19 +19,13 @@ public class BackEnd {
 	
 	}
 	
-	public boolean convert(String s) {
-		  if(s.toUpperCase() =="ON") return true;
-		  else return false;
-		}
-	
 	
 	public void start (){
+	
 		
-		boolean state = convert(State);
-		
-		//Sensor sensor = new Sensor(location, SensorName, SensorType,state);
+		Sensor sensor = new Sensor(location, SensorName, SensorType,State);
 		
 	}
-	
+	  
 
 }

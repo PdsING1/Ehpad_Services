@@ -6,9 +6,9 @@ public class Sensor {
 	String location ;
 	String sensorName ;
 	String sensorType ;
-	Boolean state; 
+	String state; 
 	
-	public Sensor(String location,String sensorName,String sensorType, Boolean state)
+	public Sensor(String location,String sensorName,String sensorType, String state)
 	{
 		this.location = location;
 		this.sensorName = sensorName; 
@@ -17,3 +17,4 @@ public class Sensor {
 	}
 
 }
+ 
