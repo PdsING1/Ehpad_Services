@@ -1,6 +1,7 @@
 package org.ClientModule;
 
 import org.ServerModule.Sensor;
+import org.ServerModule.SerializationDriver;
 
 public class BackEnd {
 	
@@ -21,11 +22,16 @@ public class BackEnd {
 	
 	
 	public void start (){
+		
+		SerializationDriver ser = new SerializationDriver();
 	
-		
+		System.out.println("start du back");
 		Sensor sensor = new Sensor(location, SensorName, SensorType,State);
-		
-	}
+		ClientSocket client = new ClientSocket();
+		ser.serializer(sensor);
+		client.getSocket(sensor);
+		System.out.println("appeler a socket");
+	} 
 	  
 
 }
