@@ -9,7 +9,7 @@ import java.sql.Statement;
 
 public class ConnectionBDD {
 
-	public static  void insertSensors(Sensor sensor )
+	public static  void insertSensors(Sensor sensor, Pool pool )
 	{
 		String url="jdbc:mysql://localhost:3306/ehpadservices?serverTimezone=UTC";
 		String userName="root";
@@ -18,14 +18,17 @@ public class ConnectionBDD {
 
 		try { String strClassName = "com.mysql.cj.jdbc.Driver"; 
 		
+//		
+//	    System.out.println("toto1");
+//	       
+//		Class.forName(strClassName); 
+//		 System.out.println("toto2");
+//		Connection conn = DriverManager.getConnection(url,userName,pwd); 
+//		 System.out.println("toto3");
 		
-	    System.out.println("toto1");
-	       
-		Class.forName(strClassName); 
-		 System.out.println("toto2");
-		Connection conn = DriverManager.getConnection(url,userName,pwd); 
-		 System.out.println("toto3");
-		 
+//		
+		Connection conn = pool.getConnection();
+		
 		 String strInsert = "INSERT INTO sensor " 
 					+ "(location, sensorname, sensortype, state) " 
 					+ "VALUES ('"+ sensor.location+"', '"+sensor.sensorName+"', '"+sensor.sensorType+"', '"+sensor.state+"');"; 
@@ -35,12 +38,9 @@ public class ConnectionBDD {
 		getInf.executeUpdate(strInsert); 
 
 		 System.out.println("toto5");
-		conn.close(); 
+		//conn.close(); 
 		} 
-		catch(ClassNotFoundException e) { 
-			System.out.print("ClassNotFound Class ConnectionBDD");
-
-		} catch(SQLException e) {
+		catch(SQLException e) {
 			System.out.println("SqlException Class ConnectionBDD");
 		} 
 	}
