@@ -14,85 +14,57 @@ import java.net.ServerSocket;
 public class Server implements Runnable
 {
 	static final int port = 9999;
+	static ServerSocket server = null;
+	static Thread t;
+	static boolean isRunning = false;
 
-	public static void main(String[] args)
-	{
-		Runnable runnable = new Server();
-		Thread thread = new Thread(runnable);
-		thread.start();
+	//		Runnable runnable = new Server();
+	//		Thread thread = new Thread(runnable);
+	//		thread.start();
+
+	public static void main (String[] args) {
+		if (launchServer () == null)
+			System.out.println("Erreur lors du lancement du serveur -- voir le lunchServer");
+
+
 
 	}
 
-	public void run() {
-		Object objetRecu ;
-		String url="jdbc:mysql://localhost:3306/ehpadservices?serverTimezone=UTC";
-		String userName="root";
-		String pwd = "";
-
-		try {
-			Pool pool = Pool.create(url, userName, pwd);
-
-			ServerSocket s = new ServerSocket(port);
-			System.out.println("Socket serveur: " + s);
-			
-		
-			Socket soc;
-			ObjectInputStream in;
-
-			ObjectOutputStream out;
-
-			while(true)
-			{
-				try {
-					soc = s.accept();
-					System.out.println("Serveur a accepte connexion: " + soc);
-
-
-					out = new ObjectOutputStream(soc.getOutputStream());
-
-					out.flush();
-
-					System.out.println("ObjectOutputStream");
-					in = new ObjectInputStream(soc.getInputStream());
-					System.out.println("Input");
-					
-					DeserializationDriver ser = new DeserializationDriver();
-
-					System.out.println("essayer de lire");
-					objetRecu =  in.readObject();
-					Sensor sensor = (Sensor) objetRecu;
-					Sensor sensors = ser.deserializer(sensor);
-					System.out.println("appel insertSensors");
-					ConnectionBDD.insertSensors(sensors, pool);
-					System.out.println("Serveur a reçu les données du client " );
-					
-					
-					in.close();
-					out.close();
-					
-					soc.close();
-					
-					
-				} catch (ClassNotFoundException e) {
-
-					e.printStackTrace();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+	public static ServerSocket launchServer () {
+		if (server == null)
+			try {
+				server = new ServerSocket (port);          
+				t = new Thread (new Server ());
+				t.start();         
+			} catch (IOException e) {
+				e.printStackTrace();
 			}
+		return server;
+	}
 
-			
+	public void run() {
 
 
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		} catch (SQLException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
+		try {          
+			System.out.println("Le Serveur est lancé ");
+			isRunning = true;
+			while (isRunning)   {      
+				Socket socket = server.accept();
+				new Thread (new ThreadConnection(socket));             
+			}
+		} catch (IOException e) {
+			server = null;             
+		} finally {
+			try {
+				server.close();
+				server = null;
+			} catch (IOException e) {              
+				e.printStackTrace();
+			}          
 		}
 
+
+			
 
 	}
 
