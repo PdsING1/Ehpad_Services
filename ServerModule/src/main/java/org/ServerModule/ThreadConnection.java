@@ -26,10 +26,11 @@ public class ThreadConnection implements Runnable {
 		String pwd = "";
 
 		Pool pool;
+
 		try {
 			pool = Pool.create(url, userName, pwd);
 
-
+			Sensor sensors;
 
 			ObjectInputStream in;
 
@@ -53,11 +54,20 @@ public class ThreadConnection implements Runnable {
 				System.out.println("essayer de lire");
 				objetRecu =  in.readObject();
 				Sensor sensor = (Sensor) objetRecu;
-				Sensor sensors = ser.deserializer(sensor);
-				System.out.println("appel insertSensors");
-				ConnectionBDD.insertSensors(sensors, pool);
-				System.out.println("Serveur a reçu les données du client " );
 
+				SerializationDriver ser2 = new SerializationDriver();
+
+				String sens = ser2.serializer(sensor);
+
+				sensors = ser.deserializer(sens);
+				System.out.println("appel insertSensors");
+				boolean bool = ConnectionBDD.selectSensors2(sensors, pool);
+				boolean bool2 = ConnectionBDD.selectSensors1(sensors, pool);
+				if (!bool && !bool2)
+				{
+					ConnectionBDD.insertSensors(sensors, pool);
+					System.out.println("Serveur a reçu les données du client " );
+				}
 
 				in.close();
 				out.close();

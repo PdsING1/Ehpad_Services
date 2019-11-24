@@ -35,11 +35,13 @@ public class ClientSocket
 			ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
 
 
-         
+			System.out.println(serializer);
 
 			// Write data to the output stream of the Client Socket.
 			out.writeObject(serializer);
-
+			System.out.println("serializer2");
+			
+			
 			out.close();
 			in.close();
 

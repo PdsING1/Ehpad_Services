@@ -1,4 +1,4 @@
-package org.ServerModule;
+package org.ClientModule;
 
 import java.io.Serializable;
 
@@ -11,11 +11,48 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class Sensor implements Serializable{
 	
 	//int id;
-	public String location ;
-	public String sensorName ;
-	public String sensorType ;
-	public String state; 
+	String location ;
+	String sensorName ;
+	String sensorType ;
+	String state; 
 	
+	public String getLocation() {
+		return location;
+	}
+
+	public void setLocation(String location) {
+		this.location = location;
+	}
+
+	public String getSensorName() {
+		return sensorName;
+	}
+
+	public void setSensorName(String sensorName) {
+		this.sensorName = sensorName;
+	}
+
+	public String getSensorType() {
+		return sensorType;
+	}
+
+	public void setSensorType(String sensorType) {
+		this.sensorType = sensorType;
+	}
+
+	public String getState() {
+		return state;
+	}
+
+	public void setState(String state) {
+		this.state = state;
+	}
+	
+	public Sensor ()
+	{
+		
+	}
+
 	@JsonCreator
 	public Sensor(@JsonProperty("location") String location,@JsonProperty("sensorName") String sensorName,@JsonProperty("sensorType") String sensorType,@JsonProperty("state") String state)
 	{
@@ -27,7 +64,7 @@ public class Sensor implements Serializable{
 	
 	public String toString()
 	{
-//		
+	
 
 		final StringBuffer sb = new StringBuffer("Sensor{");
 		sb.append("location=").append(location);

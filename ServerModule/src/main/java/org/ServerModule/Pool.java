@@ -13,7 +13,7 @@ public class Pool implements ConnectionPool {
 	private String password;
 	private List<Connection> connectionPool;
 	private List<Connection> usedConnections = new ArrayList<>();
-	private static int INITIAL_POOL_SIZE = 3;
+	private static int INITIAL_POOL_SIZE = 10;
 
 	public Pool(String url2, String user2, String password2, List<Connection> pool) {
 		this.password = password2;
