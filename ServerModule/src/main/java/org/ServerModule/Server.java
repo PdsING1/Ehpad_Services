@@ -8,13 +8,19 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStreamWriter;
 import java.net.Socket;
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.net.ServerSocket;
 
 public class Server implements Runnable
 {
+	
+	
+	
+	
 	static final int port = 9999;
 	static ServerSocket server = null;
+	private static Connection con;
 	static Thread t;
 	static boolean isRunning = false;
 
@@ -33,6 +39,17 @@ public class Server implements Runnable
 	public static ServerSocket launchServer () {
 		if (server == null)
 			try {
+				
+
+				
+				
+				
+				//Pool.create();
+			   DataSource.startConnectionPool();
+					
+				
+				
+				
 				server = new ServerSocket (port);          
 				t = new Thread (new Server ());
 				t.start();         
@@ -44,13 +61,17 @@ public class Server implements Runnable
 
 	public void run() {
 
-
+		String url="jdbc:mysql://localhost:3306/ehpadservices?serverTimezone=UTC";
+		String userName="root";
+		String pwd = "";
+		
 		try {          
 			System.out.println("Le Serveur est lancé ");
 			isRunning = true;
 			while (isRunning)   {      
 				Socket socket = server.accept();
-				new Thread (new ThreadConnection(socket));             
+				con = DataSource.getConnection(url, userName, pwd);
+				new Thread (new ThreadConnection(socket, con));             
 			}
 		} catch (IOException e) {
 			server = null;             

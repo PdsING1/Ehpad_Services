@@ -11,10 +11,13 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class Sensor implements Serializable{
 	
 	//int id;
-	public String location ;
-	public String sensorName ;
-	public String sensorType ;
-	public String state; 
+	private String location ;
+	private String sensorName ;
+	private String sensorType ;
+	private String state; 
+	
+	
+	
 	
 	@JsonCreator
 	public Sensor(@JsonProperty("location") String location,@JsonProperty("sensorName") String sensorName,@JsonProperty("sensorType") String sensorType,@JsonProperty("state") String state)
@@ -24,21 +27,50 @@ public class Sensor implements Serializable{
 		this.sensorType = sensorType;
 		this.state = state;
 	}
-	
-	public String toString()
-	{
-//		
+	public Sensor() {
+		// TODO Auto-generated constructor stub
+	}
 
-		final StringBuffer sb = new StringBuffer("Sensor{");
-		sb.append("location=").append(location);
-		sb.append(", sensorName='").append(sensorName).append('\'');
-		sb.append(", sensorType='").append(sensorType).append('\'');
-		sb.append(", state='").append(state).append('\'');
-		
-		sb.append('}');
-		return sb.toString();
+	public Sensor(Object object) {
+		// TODO Auto-generated constructor stub
+	}
+	
+	public String getLocation() {
+		return location;
+	}
+
+	public void setLocation(String location) {
+		this.location = location;
+	}
+
+	public String getSensorName() {
+		return sensorName;
+	}
+
+	public void setSensorName(String sensorName) {
+		this.sensorName = sensorName;
+	}
+
+	public String getSensorType() {
+		return sensorType;
+	}
+
+	public void setSensorType(String sensorType) {
+		this.sensorType = sensorType;
+	}
+
+	public String getState() {
+		return state;
+	}
+
+	public void setState(String state) {
+		this.state = state;
+	}
+
 	
 	
+	public String toString() {
+		return "Sensor [location=" + getLocation() + ", sensorName=" + getSensorName() + ", sensorType=" + getSensorType() + ", state=" + getState() +"]";
 	}
 
 }

@@ -2,6 +2,7 @@ package org.ClientModule;
 
 import java.io.Serializable;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -10,12 +11,30 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Sensor implements Serializable{
 	
-	//int id;
-	String location ;
-	String sensorName ;
-	String sensorType ;
-	String state; 
 	
+	
+	//int id;
+	private String location ;
+	private String sensorName ;
+	private String sensorType ;
+	private String state; 
+	
+
+	
+	public Sensor()	{
+		super();
+	}
+
+	
+	public Sensor(@JsonProperty("location") String location,@JsonProperty("sensorName") String sensorName,@JsonProperty("sensorType") String sensorType,@JsonProperty("state") String state)
+	{
+		this.location = location;
+		this.sensorName = sensorName; 
+		this.sensorType = sensorType;
+		this.state = state;
+	}
+
+
 	public String getLocation() {
 		return location;
 	}
@@ -47,35 +66,11 @@ public class Sensor implements Serializable{
 	public void setState(String state) {
 		this.state = state;
 	}
-	
-	public Sensor ()
-	{
-		
-	}
 
-	@JsonCreator
-	public Sensor(@JsonProperty("location") String location,@JsonProperty("sensorName") String sensorName,@JsonProperty("sensorType") String sensorType,@JsonProperty("state") String state)
-	{
-		this.location = location;
-		this.sensorName = sensorName; 
-		this.sensorType = sensorType;
-		this.state = state;
-	}
-	
-	public String toString()
-	{
-	
-
-		final StringBuffer sb = new StringBuffer("Sensor{");
-		sb.append("location=").append(location);
-		sb.append(", sensorName='").append(sensorName).append('\'');
-		sb.append(", sensorType='").append(sensorType).append('\'');
-		sb.append(", state='").append(state).append('\'');
-		
-		sb.append('}');
-		return sb.toString();
 	
 	
+	public String toString() {
+		return "Sensor [location=" + location + ", sensorName=" + sensorName + ", sensorType=" + sensorType + ", state=" + state +"]";
 	}
 
 }
