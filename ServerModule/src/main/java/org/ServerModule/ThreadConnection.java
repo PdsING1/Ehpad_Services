@@ -121,34 +121,18 @@ public class ThreadConnection implements Runnable {
 					System.out.println("Serveur a reçu les données du client " );
 				
 				//soc.close();
-
-
+//					  
+  		    	        queryClient.close();
+//                    
+//                       answerServer.close();
 			}
 
 		} catch (IOException e) {
 			e.printStackTrace();
-			try {
-				exit();
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-		}
-		finally 
-		{
-			try {
-				soc.close();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			
 		}
 	}
-	private void exit() throws IOException {
-		DataSource.putConnection(connection);
-		this.connection=null;
-		soc.close();	
-	}
+	
 	public Sensor getDoneQuery(String jsQuery){		
 
 

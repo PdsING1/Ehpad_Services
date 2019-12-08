@@ -10,7 +10,12 @@ import java.io.OutputStreamWriter;
 import java.net.Socket;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
+
+import java.util.concurrent.ExecutorService;
+
 import java.net.ServerSocket;
+import java.util.concurrent.Executors;
 
 public class Server implements Runnable
 {
@@ -20,9 +25,12 @@ public class Server implements Runnable
 	
 	static final int port = 9999;
 	static ServerSocket server = null;
-	private static Connection con;
+
 	static Thread t;
-	static boolean isRunning = false;
+	
+	private static ArrayList<ThreadConnection> clients;
+	private static ExecutorService poolThread;
+	
 
 	//		Runnable runnable = new Server();
 	//		Thread thread = new Thread(runnable);
@@ -64,14 +72,20 @@ public class Server implements Runnable
 		String url="jdbc:mysql://localhost:3306/ehpadservices?serverTimezone=UTC";
 		String userName="root";
 		String pwd = "";
+		poolThread = Executors.newFixedThreadPool(2);
 		
 		try {          
 			System.out.println("Le Serveur est lancé ");
-			isRunning = true;
-			while (isRunning)   {      
-				//Socket socket = server.accept();
-				con = DataSource.getConnection(url, userName, pwd);
-				new Thread (new ThreadConnection(server.accept(), con));             
+		
+			while (true)   {      
+				
+				Socket socket = server.accept();
+				Connection con = DataSource.getConnection(url, userName, pwd);
+				ThreadConnection clientThread = new ThreadConnection(socket, con);
+				clients.add(clientThread);
+				
+				poolThread.execute(clientThread);
+			
 			}
 		} catch (IOException e) {
 			server = null;             
