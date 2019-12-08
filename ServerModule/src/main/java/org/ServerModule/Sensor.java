@@ -11,10 +11,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class Sensor implements Serializable{
 	
 	//int id;
-	private String location ;
-	private String sensorName ;
-	private String sensorType ;
-	private String state; 
+	public String location ;
+	public String sensorName ;
+	public String sensorType ;
+	public String state; 
 	
 	
 	

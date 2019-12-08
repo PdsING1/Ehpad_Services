@@ -69,9 +69,9 @@ public class Server implements Runnable
 			System.out.println("Le Serveur est lancé ");
 			isRunning = true;
 			while (isRunning)   {      
-				Socket socket = server.accept();
+				//Socket socket = server.accept();
 				con = DataSource.getConnection(url, userName, pwd);
-				new Thread (new ThreadConnection(socket, con));             
+				new Thread (new ThreadConnection(server.accept(), con));             
 			}
 		} catch (IOException e) {
 			server = null;             
