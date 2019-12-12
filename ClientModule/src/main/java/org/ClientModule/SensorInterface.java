@@ -63,7 +63,7 @@ public class SensorInterface extends JPanel implements ActionListener {
 		this.buttonSubmit = buttonSubmit;
 	}
 
-	public JButton getButtonRetour() {
+	public static JButton getButtonRetour() {
 		return buttonRetour;
 	}
 
@@ -71,7 +71,7 @@ public class SensorInterface extends JPanel implements ActionListener {
 		this.buttonRetour = buttonRetour;
 	}
 
-	public JButton getButtonSupprimer() {
+	public static JButton getButtonSupprimer() {
 		return buttonSupprimer;
 	}
 
@@ -97,8 +97,8 @@ public class SensorInterface extends JPanel implements ActionListener {
 
 
 	public static JButton buttonSubmit;
-	public JButton buttonRetour ;
-	public JButton buttonSupprimer;
+	public static JButton buttonRetour ;
+	public static JButton buttonSupprimer;
 	
 	
 	public BackEnd sensorBack; 

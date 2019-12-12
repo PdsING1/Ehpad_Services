@@ -15,9 +15,23 @@ public class Sensor implements Serializable{
 	public String sensorName ;
 	public String sensorType ;
 	public String state; 
+	public String query; 
 	
+	@JsonCreator
+	public Sensor (@JsonProperty("query") String query)
+	{
+		this.query = query;
+	}
 	
-	
+
+	public Sensor(@JsonProperty("query") String query , @JsonProperty("location") String location,@JsonProperty("sensorName") String sensorName,@JsonProperty("sensorType") String sensorType,@JsonProperty("state") String state)
+	{
+		this.query = query;
+		this.location = location;
+		this.sensorName = sensorName; 
+		this.sensorType = sensorType;
+		this.state = state;
+	}
 	
 	@JsonCreator
 	public Sensor(@JsonProperty("location") String location,@JsonProperty("sensorName") String sensorName,@JsonProperty("sensorType") String sensorType,@JsonProperty("state") String state)
@@ -64,13 +78,21 @@ public class Sensor implements Serializable{
 	}
 
 	public void setState(String state) {
+		
 		this.state = state;
 	}
 
+	public String getQuery() {
+		return query;
+	}
+
+	public void setQuery(String query) {
+		this.query = query;
+	}
 	
 	
 	public String toString() {
-		return "Sensor [location=" + getLocation() + ", sensorName=" + getSensorName() + ", sensorType=" + getSensorType() + ", state=" + getState() +"]";
+		return "Sensor [ query =" + query + ", location=" + getLocation() + ", sensorName=" + getSensorName() + ", sensorType=" + getSensorType() + ", state=" + getState() +"]";
 	}
 
 }

@@ -11,6 +11,8 @@ import java.util.List;
 
 
 
+
+
 public class ConnectionBDD {
 
 	
@@ -119,14 +121,80 @@ public class ConnectionBDD {
 		catch (SQLException e) {
 
 		}
+	//	try {
+			//conn.close();
+		
+//		} catch (SQLException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+		return bool;
+
+	}
+	
+	
+	public static List<Sensor> find( Connection connection) {
+		List<Sensor> sensorList = new ArrayList<Sensor>();
+
+		if(connection != null)
+		{
+			try {
+				PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM SENSOR");
+				ResultSet rs = preparedStatement.executeQuery();
+				Sensor sensor ;
+				while (rs.next()) {
+					
+					sensor = sensorsHandler(rs);
+					if(sensor != null)
+					{
+						sensorList.add(sensor);
+					}
+				}
+			} catch (Exception e) {
+					e.printStackTrace();
+			}
+		}
+
+		return sensorList;
+	}
+	
+	public static  Sensor sensorsHandler(ResultSet rs) {
+		{
+			Sensor sensors = null;
+			try {
+				sensors = new Sensor(rs.getString("location"), rs.getString("sensorname"), rs.getString("sensortype"), rs.getString("state"));
+			} catch (SQLException e) {
+		    }
+			return sensors;
+		}
+	}
+	
+	public static void deleteSensor (Sensor sensor, Connection conn )
+	{
+		
+		String strDelete = "DELETE FROM sensor where " 
+				
+				+ "location = '"+sensor.location+"' AND sensorname = '"+sensor.sensorName+"' AND sensortype = '"+sensor.sensorType+"' AND state = '"+sensor.state+"';"; 
+
+		System.out.println("totoDelete");
+		Statement getInf;
+		
 		try {
+			getInf = conn.createStatement();
+
+
+			getInf.executeUpdate(strDelete);
+
+			System.out.println("toto5");
+
+
 			conn.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
-		return bool;
+		} 
 
+		
 	}
 
 	public static  void insertSensors(Sensor sensor, Connection conn )
@@ -139,18 +207,7 @@ public class ConnectionBDD {
 		String ls2 = "";
 		String strClassName = "com.mysql.cj.jdbc.Driver"; 
 
-		//		
-		//	    System.out.println("toto1");
-		//	       
-		//		Class.forName(strClassName); 
-		//		 System.out.println("toto2");
-		//		Connection conn = DriverManager.getConnection(url,userName,pwd); 
-		//		 System.out.println("toto3");
-
-		//		
 		
-
-
 
 		String strInsert = "INSERT INTO sensor " 
 				+ "(location, sensorname, sensortype, state) " 
@@ -159,6 +216,7 @@ public class ConnectionBDD {
 
 
 
+		
 		System.out.println("toto6");
 		Statement getInf2;
 		try {

@@ -19,78 +19,65 @@ import java.util.concurrent.Executors;
 
 public class Server implements Runnable
 {
-	
-	
-	
-	
+
+
+
+
 	static final int port = 9999;
 	static ServerSocket server = null;
-
-	static Thread t;
 	
+
+	
+
 	private static ArrayList<ThreadConnection> clients;
-	private static ExecutorService poolThread;
+	private static ExecutorService poolThread = Executors.newFixedThreadPool(4);
+
+
+public static void main (String []args )
+{
+	Server server= new Server();
+	server.run();
+}
+	
 	
 
-	//		Runnable runnable = new Server();
-	//		Thread thread = new Thread(runnable);
-	//		thread.start();
-
-	public static void main (String[] args) {
-		if (launchServer () == null)
-			System.out.println("Erreur lors du lancement du serveur -- voir le lunchServer");
-
-
-
-	}
-
-	public static ServerSocket launchServer () {
-		if (server == null)
-			try {
-				
-
-				
-				
-				
-				//Pool.create();
-			   DataSource.startConnectionPool();
-					
-				
-				
-				
-				server = new ServerSocket (port);          
-				t = new Thread (new Server ());
-				t.start();         
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		return server;
-	}
-
-	public void run() {
-
+		public void run() 
+		{
+		
 		String url="jdbc:mysql://localhost:3306/ehpadservices?serverTimezone=UTC";
 		String userName="root";
 		String pwd = "";
-		poolThread = Executors.newFixedThreadPool(2);
-		
-		try {          
+
+		try {    
+			
+			DataSource.startConnectionPool();
+			server = new ServerSocket (port);
+			
 			System.out.println("Le Serveur est lancé ");
-		
+
 			while (true)   {      
-				
+
 				Socket socket = server.accept();
+				
+			
 				Connection con = DataSource.getConnection(url, userName, pwd);
 				ThreadConnection clientThread = new ThreadConnection(socket, con);
-				clients.add(clientThread);
 				
-				poolThread.execute(clientThread);
 			
+				clients.add(clientThread);
+
+				poolThread.execute(clientThread);
+				
+
 			}
+			
+
+			
 		} catch (IOException e) {
 			server = null;             
 		} finally {
 			try {
+				
 				server.close();
 				server = null;
 			} catch (IOException e) {              
@@ -99,8 +86,40 @@ public class Server implements Runnable
 		}
 
 
-			
-
 	}
+
+	//	public static ServerSocket launchServer () {
+	//		if (server == null)
+	//			try {
+	//				
+	//
+	//				
+	//				
+	//				
+	//				//Pool.create();
+	//			   DataSource.startConnectionPool();
+	//					
+	//				
+	//				
+	//				
+	//				server = new ServerSocket (port);          
+	//				t = new Thread (new Server ());
+	//				t.start();         
+	//			} catch (IOException e) {
+	//				e.printStackTrace();
+	//			}
+	//		return server;
+	//	}
+	//
+	//	public void run() {
+	//
+	//		
+	//		
+	//		
+	//
+	//
+	//			
+	//
+	//	}
 
 }
