@@ -16,9 +16,9 @@ import org.ServerModule.Sensor;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-public class BackEndSensorFirst implements ActionListener, WindowListener {
+public class BackEndSensorFirst implements ActionListener {
 
-	public SensorFirst sensorFirst;
+	
 
 	public String location;
 	public String sensorName;
@@ -27,7 +27,7 @@ public class BackEndSensorFirst implements ActionListener, WindowListener {
 
 
 	public BackEndSensorFirst(SensorFirst sensorFirst) {
-		this.sensorFirst = sensorFirst;
+		
 	}
 
 
@@ -44,6 +44,8 @@ public class BackEndSensorFirst implements ActionListener, WindowListener {
 		sensor.sensorType = "sensorType" ;
 		sensor.state = "state" ;
 
+		SensorFirst sensorFirst = new SensorFirst(1);
+	    sensorFirst.setVisible(true);
 
 
 		System.out.println(sensor.toString());
@@ -57,8 +59,7 @@ public class BackEndSensorFirst implements ActionListener, WindowListener {
 
 		List<Sensor> sensors = getDeserializedObject(answer);
 		
-	    sensorFirst = new SensorFirst();
-
+		
 		for (int i = 0; i < sensors.size (); i++)
 		{
 
@@ -70,7 +71,7 @@ public class BackEndSensorFirst implements ActionListener, WindowListener {
 					{
 						JButton btn = new JButton("F");
 						btn.setBackground(Color.GREEN);
-						btn.setBounds(20, 20,20,20);
+						btn.setBounds(50, 50,50,50);
 						
 						
 						sensorFirst.corridor1.add(btn);
@@ -82,7 +83,7 @@ public class BackEndSensorFirst implements ActionListener, WindowListener {
 					{
 						JButton btn = new JButton("H");
 						btn.setBackground(Color.GREEN);
-						btn.setBounds(20, 20,20,20);
+						btn.setBounds(50, 50,50,50);
 						sensorFirst.corridor1.add(btn);
 						btn.setVisible(true);
 
@@ -94,7 +95,7 @@ public class BackEndSensorFirst implements ActionListener, WindowListener {
 					{
 						JButton btn = new JButton("F");
 						btn.setBackground(Color.GRAY);
-						btn.setBounds(20, 20,20,20);
+						btn.setBounds(50, 50,50,50);
 						sensorFirst.corridor1.add(btn);
 						btn.setVisible(true);
 
@@ -102,7 +103,7 @@ public class BackEndSensorFirst implements ActionListener, WindowListener {
 					{
 						JButton btn = new JButton("H");
 						btn.setBackground(Color.GRAY);
-						btn.setBounds(20, 20,20,20);
+						btn.setBounds(50, 50,50,50);
 						sensorFirst.corridor1.add(btn);
 						btn.setVisible(true);
 
@@ -114,7 +115,7 @@ public class BackEndSensorFirst implements ActionListener, WindowListener {
 					{
 						JButton btn = new JButton("F");
 						btn.setBackground(Color.RED);
-						btn.setBounds(20, 20,20,20);
+						btn.setBounds(50, 50,50,50);
 						sensorFirst.corridor1.add(btn);
 						btn.setVisible(true);
 
@@ -122,7 +123,7 @@ public class BackEndSensorFirst implements ActionListener, WindowListener {
 					{
 						JButton btn = new JButton("H");
 						btn.setBackground(Color.RED);
-						btn.setBounds(20, 20,20,20);
+						btn.setBounds(50, 50,50,50);
 						sensorFirst.corridor1.add(btn);
 						btn.setVisible(true);
 
@@ -141,7 +142,7 @@ public class BackEndSensorFirst implements ActionListener, WindowListener {
 					{
 						JButton btn = new JButton("F");
 						btn.setBackground(Color.GREEN);
-						btn.setBounds(20, 20,20,20);
+						btn.setBounds(50, 50,50,50);
 						sensorFirst.panelCorridor2.add(btn);
 						btn.setVisible(true);
 
@@ -149,7 +150,7 @@ public class BackEndSensorFirst implements ActionListener, WindowListener {
 					{
 						JButton btn = new JButton("H");
 						btn.setBackground(Color.GREEN);
-						btn.setBounds(20, 20,20,20);
+						btn.setBounds(50, 50,50,50);
 						sensorFirst.panelCorridor2.add(btn);
 						btn.setVisible(true);
 
@@ -161,7 +162,7 @@ public class BackEndSensorFirst implements ActionListener, WindowListener {
 					{
 						JButton btn = new JButton("F");
 						btn.setBackground(Color.GRAY);
-						btn.setBounds(20, 20,20,20);
+						btn.setBounds(50, 50,50,50);
 						sensorFirst.panelCorridor2.add(btn);
 						btn.setVisible(true);
 
@@ -169,7 +170,7 @@ public class BackEndSensorFirst implements ActionListener, WindowListener {
 					{
 						JButton btn = new JButton("H");
 						btn.setBackground(Color.GRAY);
-						btn.setBounds(20, 20,20,20);
+						btn.setBounds(50, 50,50,50);
 						sensorFirst.panelCorridor2.add(btn);
 						btn.setVisible(true);
 
@@ -181,7 +182,7 @@ public class BackEndSensorFirst implements ActionListener, WindowListener {
 					{
 						JButton btn = new JButton("F");
 						btn.setBackground(Color.RED);
-						btn.setBounds(20, 20,20,20);
+						btn.setBounds(50, 50,50,50);
 						sensorFirst.panelCorridor2.add(btn);
 						btn.setVisible(true);
 
@@ -189,7 +190,7 @@ public class BackEndSensorFirst implements ActionListener, WindowListener {
 					{
 						JButton btn = new JButton("H");
 						btn.setBackground(Color.RED);
-						btn.setBounds(20, 20,20,20);
+						btn.setBounds(50, 50,50,50);
 						sensorFirst.panelCorridor2.add(btn);
 						btn.setVisible(true);
 
@@ -208,7 +209,7 @@ public class BackEndSensorFirst implements ActionListener, WindowListener {
 					{
 						JButton btn = new JButton("F");
 						btn.setBackground(Color.GREEN);
-						btn.setBounds(20, 20,20,20);
+						btn.setBounds(30, 30,30,30);
 						sensorFirst.kitchen.add(btn);
 						btn.setVisible(true);
 
@@ -216,7 +217,7 @@ public class BackEndSensorFirst implements ActionListener, WindowListener {
 					{
 						JButton btn = new JButton("H");
 						btn.setBackground(Color.GREEN);
-						btn.setBounds(20, 20,20,20);
+						btn.setBounds(30, 30,30,30);
 						sensorFirst.kitchen.add(btn);
 						btn.setVisible(true);
 
@@ -228,7 +229,7 @@ public class BackEndSensorFirst implements ActionListener, WindowListener {
 					{
 						JButton btn = new JButton("F");
 						btn.setBackground(Color.GRAY);
-						btn.setBounds(20, 20,20,20);
+						btn.setBounds(30, 30,30,30);
 						sensorFirst.kitchen.add(btn);
 						btn.setVisible(true);
 
@@ -236,7 +237,7 @@ public class BackEndSensorFirst implements ActionListener, WindowListener {
 					{
 						JButton btn = new JButton("H");
 						btn.setBackground(Color.GRAY);
-						btn.setBounds(20, 20,20,20);
+						btn.setBounds(30, 30,30,30);
 						sensorFirst.kitchen.add(btn);
 						btn.setVisible(true);
 
@@ -248,7 +249,7 @@ public class BackEndSensorFirst implements ActionListener, WindowListener {
 					{
 						JButton btn = new JButton("F");
 						btn.setBackground(Color.RED);
-						btn.setBounds(20, 20,20,20);
+						btn.setBounds(30, 30,30,30);
 						sensorFirst.kitchen.add(btn);
 						btn.setVisible(true);
 
@@ -256,7 +257,7 @@ public class BackEndSensorFirst implements ActionListener, WindowListener {
 					{
 						JButton btn = new JButton("H");
 						btn.setBackground(Color.RED);
-						btn.setBounds(20, 20,20,20);
+						btn.setBounds(30, 30,30,30);
 						sensorFirst.kitchen.add(btn);
 						btn.setVisible(true);
 
@@ -275,7 +276,7 @@ public class BackEndSensorFirst implements ActionListener, WindowListener {
 					{
 						JButton btn = new JButton("F");
 						btn.setBackground(Color.GREEN);
-						btn.setBounds(20, 20,20,20);
+						btn.setBounds(30, 30,30,30);
 						sensorFirst.panelLibrary.add(btn);
 						btn.setVisible(true);
 
@@ -283,7 +284,7 @@ public class BackEndSensorFirst implements ActionListener, WindowListener {
 					{
 						JButton btn = new JButton("H");
 						btn.setBackground(Color.GREEN);
-						btn.setBounds(20, 20,20,20);
+						btn.setBounds(30, 30,30,30);
 						sensorFirst.panelLibrary.add(btn);
 						btn.setVisible(true);
 
@@ -295,7 +296,7 @@ public class BackEndSensorFirst implements ActionListener, WindowListener {
 					{
 						JButton btn = new JButton("F");
 						btn.setBackground(Color.GRAY);
-						btn.setBounds(20, 20,20,20);
+						btn.setBounds(30, 30,30,30);
 						sensorFirst.panelLibrary.add(btn);
 						btn.setVisible(true);
 
@@ -303,7 +304,7 @@ public class BackEndSensorFirst implements ActionListener, WindowListener {
 					{
 						JButton btn = new JButton("H");
 						btn.setBackground(Color.GRAY);
-						btn.setBounds(20, 20,20,20);
+						btn.setBounds(30, 30,30,30);
 						sensorFirst.panelLibrary.add(btn);
 						btn.setVisible(true);
 					}else {}
@@ -314,7 +315,7 @@ public class BackEndSensorFirst implements ActionListener, WindowListener {
 					{
 						JButton btn = new JButton("F");
 						btn.setBackground(Color.RED);
-						btn.setBounds(20, 20,20,20);
+						btn.setBounds(30, 30,30,30);
 						sensorFirst.panelLibrary.add(btn);
 						btn.setVisible(true);
 
@@ -322,7 +323,7 @@ public class BackEndSensorFirst implements ActionListener, WindowListener {
 					{
 						JButton btn = new JButton("H");
 						btn.setBackground(Color.RED);
-						btn.setBounds(20, 20,20,20);
+						btn.setBounds(30, 30,30,30);
 						sensorFirst.panelLibrary.add(btn);
 						btn.setVisible(true);
 
@@ -341,7 +342,7 @@ public class BackEndSensorFirst implements ActionListener, WindowListener {
 					{
 						JButton btn = new JButton("F");
 						btn.setBackground(Color.GREEN);
-						btn.setBounds(20, 20,20,20);
+						btn.setBounds(30, 30,30,30);
 						sensorFirst.panelLivingRoom.add(btn);
 						btn.setVisible(true);
 
@@ -349,7 +350,7 @@ public class BackEndSensorFirst implements ActionListener, WindowListener {
 					{
 						JButton btn = new JButton("H");
 						btn.setBackground(Color.GREEN);
-						btn.setBounds(20, 20,20,20);
+						btn.setBounds(30, 30,30,30);
 						sensorFirst.panelLivingRoom.add(btn);
 						btn.setVisible(true);
 
@@ -361,7 +362,7 @@ public class BackEndSensorFirst implements ActionListener, WindowListener {
 					{
 						JButton btn = new JButton("F");
 						btn.setBackground(Color.GRAY);
-						btn.setBounds(20, 20,20,20);
+						btn.setBounds(30, 30,30,30);
 						sensorFirst.panelLivingRoom.add(btn);
 						btn.setVisible(true);
 
@@ -369,7 +370,7 @@ public class BackEndSensorFirst implements ActionListener, WindowListener {
 					{
 						JButton btn = new JButton("H");
 						btn.setBackground(Color.GRAY);
-						btn.setBounds(20, 20,20,20);
+						btn.setBounds(30, 30,30,30);
 						sensorFirst.panelLivingRoom.add(btn);
 						btn.setVisible(true);
 
@@ -381,7 +382,7 @@ public class BackEndSensorFirst implements ActionListener, WindowListener {
 					{
 						JButton btn = new JButton("F");
 						btn.setBackground(Color.RED);
-						btn.setBounds(20, 20,20,20);
+						btn.setBounds(30, 30,30,30);
 						sensorFirst.panelLivingRoom.add(btn);
 						btn.setVisible(true);
 
@@ -389,7 +390,7 @@ public class BackEndSensorFirst implements ActionListener, WindowListener {
 					{
 						JButton btn = new JButton("H");
 						btn.setBackground(Color.RED);
-						btn.setBounds(20, 20,20,20);
+						btn.setBounds(30, 30,30,30);
 						sensorFirst.panelLivingRoom.add(btn);
 						btn.setVisible(true);
 
@@ -436,67 +437,13 @@ public class BackEndSensorFirst implements ActionListener, WindowListener {
 
 
 	@Override
-	public void windowOpened(WindowEvent e) {
-		
-		
-		
-	}
-
-
-
-	@Override
-	public void windowClosing(WindowEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-
-	@Override
-	public void windowClosed(WindowEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-
-	@Override
-	public void windowIconified(WindowEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-
-	@Override
-	public void windowDeiconified(WindowEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-
-	@Override
-	public void windowActivated(WindowEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-
-	@Override
-	public void windowDeactivated(WindowEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-
-	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		
 	}
+
+
+
 
 }
 
