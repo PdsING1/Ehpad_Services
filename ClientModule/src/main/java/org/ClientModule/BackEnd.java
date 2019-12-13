@@ -17,7 +17,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import javax.json.bind.JsonbBuilder;
 
-public class BackEnd implements ActionListener{
+public class BackEnd implements ActionListener {
 
 	public String location;
 	public String sensorName;
@@ -63,7 +63,7 @@ public class BackEnd implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource()== SensorInterface.getButtonSubmit()){
 			System.out.println("action button Submit");
-			ClientSocket client = new ClientSocket();
+			
 
 			Sensor sensor = new Sensor();
 			sensor.query = "INSERT";
@@ -86,7 +86,11 @@ public class BackEnd implements ActionListener{
 			//			System.out.println("toto1");
 			//ClientServerConnection.callSocket();
 
+			ClientSocket client = new ClientSocket();
+
+			
 			String answer = client.getSocket(result);
+
 
 
 			//String error = Tools.jsonNode(JSONExample.ERROR, answer).trim();
@@ -94,7 +98,7 @@ public class BackEnd implements ActionListener{
 		}
 		else if (e.getSource()== SensorInterface.getButtonSupprimer()){
 			System.out.println("action button Delete");
-			ClientSocket client = new ClientSocket();
+			
 
 			Sensor sensor = new Sensor();
 			sensor.query = "DELETE";
@@ -117,7 +121,11 @@ public class BackEnd implements ActionListener{
 			//			System.out.println("toto1");
 			//ClientServerConnection.callSocket();
 
+			ClientSocket client = new ClientSocket();
+
+		
 			String answer = client.getSocket(result);
+
 
 		}
 		else if (e.getSource()== SensorInterface.getButtonRetour()){

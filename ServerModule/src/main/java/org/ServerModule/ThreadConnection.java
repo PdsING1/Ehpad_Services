@@ -32,7 +32,7 @@ public class ThreadConnection implements Runnable {
 		System.out.println("arrive au constructeur ThreadConnection");
 		this.soc = soc;
 		this.connection = connection; 
-		run();
+		
 
 	}
 
@@ -53,44 +53,50 @@ public class ThreadConnection implements Runnable {
 
 				String rq = queryClient.readLine();
 				System.out.println(rq);
+				if ((rq == null) || rq.equalsIgnoreCase("QUIT")) {
+					soc.close();
+					return;
+				} else {
 
-				Sensor outputrq = getDoneQuery(rq);
-				//answerServer.println(outputrq);
+					Sensor outputrq = getDoneQuery(rq);
+					//answerServer.println(outputrq);
 
-				System.out.println(outputrq.toString());
+					System.out.println(outputrq.toString());
 
-				
-				if (outputrq.getQuery().equals( "INSERT"))
-				{
-					System.out.println("appel insertSensors");
-					ConnectionBDD.insertSensors(outputrq, connection);
+
+					if (outputrq.getQuery().equals( "INSERT"))
+					{
+						System.out.println("appel insertSensors");
+						ConnectionBDD.insertSensors(outputrq, connection);
+					}
+					else if (outputrq.getQuery().equals( "SELECT"))
+					{
+
+						List<Sensor> sensors = ConnectionBDD.find(connection); 
+						Jsonb jsonb = JsonbBuilder.create();
+						String result = jsonb.toJson(sensors);
+						System.out.println(result);
+
+						answerServer.println(result);
+
+					}
+					else if (outputrq.getQuery().equals( "DELETE"))
+					{
+						ConnectionBDD.deleteSensor(outputrq, connection);
+					}
+
+
+					else 
+					{
+						System.out.println("Aucune requête demandée ! " );
+					}
+					System.out.println("Serveur a reçu les données du client " );
+
+					//soc.close();
+					
+					answerServer.flush();
+
 				}
-				else if (outputrq.getQuery().equals( "SELECT"))
-				{
-
-					List<Sensor> sensors = ConnectionBDD.find(connection); 
-					Jsonb jsonb = JsonbBuilder.create();
-					String result = jsonb.toJson(sensors);
-					System.out.println(result);
-
-					answerServer.println(result);
-
-				}
-				else if (outputrq.getQuery().equals( "DELETE"))
-				{
-					ConnectionBDD.deleteSensor(outputrq, connection);
-				}
-
-
-				else 
-				{
-					System.out.println("Aucune requête demandée ! " );
-				}
-				System.out.println("Serveur a reçu les données du client " );
-
-				//soc.close();
-				
-
 			}
 
 		} catch (IOException e) {
