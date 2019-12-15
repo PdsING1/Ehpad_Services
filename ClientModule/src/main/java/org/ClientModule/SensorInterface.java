@@ -15,6 +15,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.Panel;
 import javax.swing.JTextPane;
+import java.awt.Window.Type;
 
 public class SensorInterface extends JPanel implements ActionListener {
 	public static JTextField textLocation;
@@ -100,8 +101,11 @@ public class SensorInterface extends JPanel implements ActionListener {
 	public static JButton buttonRetour ;
 	public static JButton buttonSupprimer;
 	
+	SensorFirst sensorFirst;
+	
 	
 	public BackEnd sensorBack; 
+	private JTextField Legende;
 	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -131,9 +135,14 @@ public class SensorInterface extends JPanel implements ActionListener {
 		
 		sensorBack = new BackEnd(this);
 		frame = new JFrame();
+		frame.getContentPane().setBackground(new Color(0, 128, 128));
+		//frame.setType(Type.POPUP);
+		frame.setResizable(false);
+		frame.setAlwaysOnTop(true);
 		
 		setBackground(new Color(0, 128, 128));
 		setLayout(null);
+		frame.getContentPane().setLayout(null);
 
 		//final SensorFirst instance2 = new SensorFirst();
 		textLocation = new JTextField();
@@ -161,6 +170,7 @@ public class SensorInterface extends JPanel implements ActionListener {
 		frame.getContentPane().add(textState);
 
 		 buttonSubmit = new JButton("SUBMIT");
+		 buttonSubmit.setEnabled(true);
 		buttonSubmit.setForeground(new Color(47, 79, 79));
 		buttonSubmit.setFont(new Font("Sitka Heading", Font.PLAIN, 18));
 		buttonSubmit.setBackground(new Color(240, 248, 255));
@@ -168,15 +178,28 @@ public class SensorInterface extends JPanel implements ActionListener {
 		frame.getContentPane().add(buttonSubmit);
 		buttonSubmit.addActionListener(sensorBack);
 
-		 buttonRetour = new JButton("Retour");
-		buttonRetour.setForeground(new Color(47, 79, 79));
-		buttonRetour.setFont(new Font("Sitka Heading", Font.PLAIN, 18));
-		buttonRetour.setBackground(new Color(240, 248, 255));
-		buttonRetour.setBounds(638,505 , 132, 47);
-		frame.getContentPane().add(buttonRetour);
-		buttonRetour.addActionListener(this);
+//		 buttonRetour = new JButton("Retour");
+//		buttonRetour.setForeground(new Color(47, 79, 79));
+//		buttonRetour.setFont(new Font("Sitka Heading", Font.PLAIN, 18));
+//		buttonRetour.setBackground(new Color(240, 248, 255));
+//		buttonRetour.setBounds(638,505 , 132, 47);
+//		frame.getContentPane().add(buttonRetour);
+//		buttonRetour.addActionListener(new ActionListener() {
+//			public void actionPerformed(ActionEvent arg0) {
+//				
+//				sensorFirst = new SensorFirst();
+//							
+//				sensorFirst.getFrame().setVisible(true);
+//				  
+//				  getFrame().dispose();
+//			}
+//
+//			
+//			
+//		});
 		
 		 buttonSupprimer = new JButton("Supprimer");
+		 buttonSupprimer.setEnabled(true);
 		buttonSupprimer.setForeground(new Color(47, 79, 79));
 		buttonSupprimer.setFont(new Font("Sitka Heading", Font.PLAIN, 18));
 		buttonSupprimer.setBackground(new Color(240, 248, 255));
@@ -185,11 +208,10 @@ public class SensorInterface extends JPanel implements ActionListener {
 		buttonSupprimer.addActionListener(sensorBack);
 
 		JTextPane txtpnLocation = new JTextPane();
-		txtpnLocation.setEditable(false);
 		txtpnLocation.setForeground(new Color(240, 248, 255));
 		txtpnLocation.setBackground(new Color(0, 128, 128));
 		txtpnLocation.setFont(new Font("Sitka Text", Font.PLAIN, 20));
-		txtpnLocation.setText("Location :");
+		txtpnLocation.setText("Location : ");
 		txtpnLocation.setBounds(160, 306, 171, 41);
 		frame.getContentPane().add(txtpnLocation);
 
@@ -219,20 +241,33 @@ public class SensorInterface extends JPanel implements ActionListener {
 		txtpnStateOn.setBackground(new Color(0, 128, 128));
 		txtpnStateOn.setBounds(160, 512, 171, 41);
 		frame.getContentPane().add(txtpnStateOn);
+		
+		Legende = new JTextField();
+		Legende.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		Legende.setEditable(false);
+		Legende.setText("Location : Corridor1 / Corridor2/ Kitchen / LivingRoom / Library          Sensor Type : Smoke/Humidity        State : ON/OFF/ALERTE");
+		Legende.setForeground(new Color(255, 255, 224));
+		Legende.setBackground(new Color(0, 128, 128));
+		Legende.setBounds(10, 119, 760, 105);
+		frame.getContentPane().add(Legende);
+		Legende.setColumns(10);
+		Legende.setVisible(true);
 
 		JTextPane txtpnEhpadServices = new JTextPane();
-		txtpnEhpadServices.setText("Ajouter/Supprimer un capteur");
 		txtpnEhpadServices.setEditable(false);
+		txtpnEhpadServices.setText("         Ajouter/Supprimer un capteur");
 		txtpnEhpadServices.setFont(new Font("Sitka Text", Font.BOLD, 40));
 		txtpnEhpadServices.setBackground(new Color(0, 128, 128));
-		txtpnEhpadServices.setForeground(new Color(240, 248, 255));
-		txtpnEhpadServices.setBounds(136, 117, 633, 88);
+		txtpnEhpadServices.setForeground(Color.WHITE);
+		txtpnEhpadServices.setBounds(0, 0, 790, 611);
 		frame.getContentPane().add(txtpnEhpadServices);
 		
-		getFrame().setVisible(true);
-		getFrame().setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		getFrame().setLocationRelativeTo(this);
-		getFrame().resize(800, 800);
+		
+		frame.setVisible(true);
+		//frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setLocationRelativeTo(this);
+		frame.resize(800, 1000);
+		frame.setResizable(false);
 
 
 	}
@@ -243,9 +278,4 @@ public class SensorInterface extends JPanel implements ActionListener {
 
 
 	}
-
-
-
-
-
 }

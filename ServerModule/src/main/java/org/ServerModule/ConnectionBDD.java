@@ -68,10 +68,10 @@ public class ConnectionBDD {
 
 		try {
 			PreparedStatement ps = conn.prepareStatement(strSelectCount);
-			ps.setString(1, sensor.getLocation() );
-			ps.setString(2, sensor.getSensorName() );
-			ps.setString(3, sensor.getSensorType() );
-			ps.setString(4, sensor.getState() );
+			ps.setString(1, sensor.getLocation().toUpperCase() );
+			ps.setString(2, sensor.getSensorName().toUpperCase() );
+			ps.setString(3, sensor.getSensorType().toUpperCase() );
+			ps.setString(4, sensor.getState().toUpperCase() );
 
 
 			ResultSet resultats = ps.executeQuery();
@@ -101,16 +101,23 @@ public class ConnectionBDD {
 
 		String strSelectCountFilter = "SELECT idsensor, location,sensortype FROM sensor WHERE location = ? AND sensortype = ? ;" ;
 
-		boolean bool = true ;
+		boolean bool = false ;
 
 		try {
 			PreparedStatement ps = conn.prepareStatement(strSelectCountFilter);
-			ps.setString(1, sensor.location );
-			ps.setString(2, sensor.sensorType );
+			ps.setString(1, sensor.location.toUpperCase() );
+			ps.setString(2, sensor.sensorType.toUpperCase() );
 
 			ResultSet resultats = ps.executeQuery();
-
-			bool = resultats.next();
+            int nb = resultats.getFetchSize();
+			
+            if(nb < 2 )
+            {
+			bool = false;
+            }
+            else {
+            	bool = true;
+            }
 			resultats.close();
 			ps.close();
 
@@ -119,6 +126,8 @@ public class ConnectionBDD {
 
 		}
 		catch (SQLException e) {
+			
+			
 
 		}
 	//	try {
@@ -158,6 +167,34 @@ public class ConnectionBDD {
 		return sensorList;
 	}
 	
+	
+	public static void updateSensors(Sensor sensor, Connection conn )
+	{
+       String strDelete = "UPDATE sensor SET state = 'ON' where state ='ALERTE' AND location ='" 
+				
+				+sensor.location.toUpperCase()+"';"; 
+
+		System.out.println("totoUpdate");
+		Statement getInf;
+		
+		try {
+			getInf = conn.createStatement();
+
+
+			getInf.executeUpdate(strDelete);
+
+			System.out.println("totoUpdateOK");
+
+
+			conn.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+		
+		
+	}
+	
 	public static  Sensor sensorsHandler(ResultSet rs) {
 		{
 			Sensor sensors = null;
@@ -174,7 +211,7 @@ public class ConnectionBDD {
 		
 		String strDelete = "DELETE FROM sensor where " 
 				
-				+ "location = '"+sensor.location+"' AND sensorname = '"+sensor.sensorName+"' AND sensortype = '"+sensor.sensorType+"' AND state = '"+sensor.state+"';"; 
+				+ "location = '"+sensor.location.toUpperCase()+"' AND sensorname = '"+sensor.sensorName.toUpperCase()+"' AND sensortype = '"+sensor.sensorType.toUpperCase()+"' AND state = '"+sensor.state.toUpperCase()+"';"; 
 
 		System.out.println("totoDelete");
 		Statement getInf;
@@ -199,19 +236,21 @@ public class ConnectionBDD {
 
 	public static  void insertSensors(Sensor sensor, Connection conn )
 	{
-		String url="jdbc:mysql://localhost:3306/ehpadservices?serverTimezone=UTC";
-		String userName="root";
-		String pwd = "";
-
-		String ls1 = "";
-		String ls2 = "";
-		String strClassName = "com.mysql.cj.jdbc.Driver"; 
-
+//		String url="jdbc:mysql://localhost:3306/ehpadservices?serverTimezone=UTC";
+//		String userName="root";
+//		String pwd = "";
+//
+//		String ls1 = "";
+//		String ls2 = "";
+//		String strClassName = "com.mysql.cj.jdbc.Driver"; 
+//		
+		
+	
 		
 
 		String strInsert = "INSERT INTO sensor " 
 				+ "(location, sensorname, sensortype, state) " 
-				+ "VALUES ('"+ sensor.location+"', '"+sensor.sensorName+"', '"+sensor.sensorType+"', '"+sensor.state+"');"; 
+				+ "VALUES ('"+ sensor.location.toUpperCase()+"', '"+sensor.sensorName.toUpperCase()+"', '"+sensor.sensorType.toUpperCase()+"', '"+sensor.state.toUpperCase()+"');"; 
 
 
 

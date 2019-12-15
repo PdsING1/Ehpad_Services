@@ -24,34 +24,7 @@ public class ClientSocket
 			try {
 
 				socket = new Socket(serverName, serverPort);
-				//System.out.println("Socket client: " + socket);
-				// Send a request to connect to the server is listening
-				// on machine 'localhost' port 7777.            
-
-
-				// Create output stream at the client (to send data to the server)
-					//	ObjectOutputStream out =  new ObjectOutputStream(socket.getOutputStream());
-				//			
-				//
-				//			// Input stream at Client (Receive data from the server).
-				//		ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
-				//
-				//
-				//			System.out.println(serializer);
-				//
-				//			// Write data to the output stream of the Client Socket.
-				//			out.writeObject(serializer);
-				//			System.out.println("serializer2");
-				//			
-				//			
-				//			out.close();
-				//			in.close();
-				//
-				//			socket.close();
-
-
-
-				//
+			
 
 				writeToServer = new PrintWriter(new OutputStreamWriter(socket.getOutputStream(), "UTF-8"), true);	
 				readFromServer = new BufferedReader(new InputStreamReader(socket.getInputStream(), "UTF-8"));

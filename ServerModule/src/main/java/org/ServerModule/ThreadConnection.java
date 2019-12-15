@@ -66,8 +66,28 @@ public class ThreadConnection implements Runnable {
 
 					if (outputrq.getQuery().equals( "INSERT"))
 					{
+					
 						System.out.println("appel insertSensors");
+						Boolean bool2 = ConnectionBDD.selectSensors1(outputrq, connection);
+						Boolean bool = ConnectionBDD.selectSensors2(outputrq, connection);
+//						if(bool = false)
+//						{
+//							System.out.println("bool");
+//							
+//							if(bool2 = false )
+//							{
+//								System.out.println("bool2");
+						
 						ConnectionBDD.insertSensors(outputrq, connection);
+//						
+//							}else 
+//							{
+//								
+//							}
+//						}else 
+//						{
+//							
+//						}
 					}
 					else if (outputrq.getQuery().equals( "SELECT"))
 					{
@@ -84,7 +104,16 @@ public class ThreadConnection implements Runnable {
 					{
 						ConnectionBDD.deleteSensor(outputrq, connection);
 					}
-
+                    
+					else if (outputrq.getQuery().equals( "UPDATE"))
+					{
+					
+						System.out.println("appel update");
+						
+						
+						ConnectionBDD.updateSensors(outputrq, connection);
+							
+					}
 
 					else 
 					{
@@ -99,7 +128,7 @@ public class ThreadConnection implements Runnable {
 				}
 			}
 
-		} catch (IOException e) {
+		} catch (IOException | SQLException e) {
 			e.printStackTrace();
 
 		}

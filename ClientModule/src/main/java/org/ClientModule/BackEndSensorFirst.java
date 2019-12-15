@@ -7,6 +7,7 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
 
 import javax.json.bind.Jsonb;
 import javax.json.bind.JsonbBuilder;
@@ -18,7 +19,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class BackEndSensorFirst implements ActionListener {
 
-	
+
 
 	public String location;
 	public String sensorName;
@@ -27,8 +28,9 @@ public class BackEndSensorFirst implements ActionListener {
 
 
 	public BackEndSensorFirst(SensorFirst sensorFirst) {
-		
+
 	}
+
 
 
 
@@ -45,7 +47,9 @@ public class BackEndSensorFirst implements ActionListener {
 		sensor.state = "state" ;
 
 		SensorFirst sensorFirst = new SensorFirst(1);
-	    sensorFirst.setVisible(true);
+		sensorFirst.setVisible(true);
+
+		Timer timer = new Timer();
 
 
 		System.out.println(sensor.toString());
@@ -58,8 +62,8 @@ public class BackEndSensorFirst implements ActionListener {
 		String answer = client.getSocket(result);
 
 		List<Sensor> sensors = getDeserializedObject(answer);
-		
-		
+
+
 		for (int i = 0; i < sensors.size (); i++)
 		{
 
@@ -72,11 +76,11 @@ public class BackEndSensorFirst implements ActionListener {
 						JButton btn = new JButton("F");
 						btn.setBackground(Color.GREEN);
 						btn.setBounds(50, 50,50,50);
-						
-						
+
+
 						sensorFirst.corridor1.add(btn);
-					
-						
+
+
 						btn.setVisible(true);
 
 					}else if(sensors.get(i).sensorType.toUpperCase().equals("HUMIDITY"))
@@ -118,6 +122,10 @@ public class BackEndSensorFirst implements ActionListener {
 						btn.setBounds(50, 50,50,50);
 						sensorFirst.corridor1.add(btn);
 						btn.setVisible(true);
+						sensorFirst.btnArrterLalerte.setVisible(true);
+						sensorFirst.txtDesCapteurs.setVisible(true);
+						sensorFirst.txtSensor.setVisible(true);
+						sensorFirst.textState.setVisible(true);
 
 					}else if(sensors.get(i).sensorType.toUpperCase().equals("HUMIDITY"))
 					{
@@ -126,6 +134,10 @@ public class BackEndSensorFirst implements ActionListener {
 						btn.setBounds(50, 50,50,50);
 						sensorFirst.corridor1.add(btn);
 						btn.setVisible(true);
+						sensorFirst.btnArrterLalerte.setVisible(true);
+						sensorFirst.txtDesCapteurs.setVisible(true);
+						sensorFirst.txtSensor.setVisible(true);
+						sensorFirst.textState.setVisible(true);
 
 					}else {}
 
@@ -185,6 +197,10 @@ public class BackEndSensorFirst implements ActionListener {
 						btn.setBounds(50, 50,50,50);
 						sensorFirst.panelCorridor2.add(btn);
 						btn.setVisible(true);
+						sensorFirst.btnArrterLalerte.setVisible(true);
+						sensorFirst.txtDesCapteurs.setVisible(true);
+						sensorFirst.txtSensor.setVisible(true);
+						sensorFirst.textState.setVisible(true);
 
 					}else if(sensors.get(i).sensorType.toUpperCase().equals("HUMIDITY"))
 					{
@@ -193,6 +209,10 @@ public class BackEndSensorFirst implements ActionListener {
 						btn.setBounds(50, 50,50,50);
 						sensorFirst.panelCorridor2.add(btn);
 						btn.setVisible(true);
+						sensorFirst.btnArrterLalerte.setVisible(true);
+						sensorFirst.txtDesCapteurs.setVisible(true);
+						sensorFirst.txtSensor.setVisible(true);
+						sensorFirst.textState.setVisible(true);
 
 					}else {}
 
@@ -212,6 +232,7 @@ public class BackEndSensorFirst implements ActionListener {
 						btn.setBounds(30, 30,30,30);
 						sensorFirst.kitchen.add(btn);
 						btn.setVisible(true);
+
 
 					}else if(sensors.get(i).sensorType.toUpperCase().equals("HUMIDITY"))
 					{
@@ -252,6 +273,10 @@ public class BackEndSensorFirst implements ActionListener {
 						btn.setBounds(30, 30,30,30);
 						sensorFirst.kitchen.add(btn);
 						btn.setVisible(true);
+						sensorFirst.btnArrterLalerte.setVisible(true);
+						sensorFirst.txtDesCapteurs.setVisible(true);
+						sensorFirst.txtSensor.setVisible(true);
+						sensorFirst.textState.setVisible(true);
 
 					}else if(sensors.get(i).sensorType.toUpperCase().equals("HUMIDITY"))
 					{
@@ -260,7 +285,10 @@ public class BackEndSensorFirst implements ActionListener {
 						btn.setBounds(30, 30,30,30);
 						sensorFirst.kitchen.add(btn);
 						btn.setVisible(true);
-
+						sensorFirst.btnArrterLalerte.setVisible(true);
+						sensorFirst.txtDesCapteurs.setVisible(true);
+						sensorFirst.txtSensor.setVisible(true);
+						sensorFirst.textState.setVisible(true);
 					}else {}
 
 				}else
@@ -318,6 +346,10 @@ public class BackEndSensorFirst implements ActionListener {
 						btn.setBounds(30, 30,30,30);
 						sensorFirst.panelLibrary.add(btn);
 						btn.setVisible(true);
+						sensorFirst.btnArrterLalerte.setVisible(true);
+						sensorFirst.txtDesCapteurs.setVisible(true);
+						sensorFirst.txtSensor.setVisible(true);
+						sensorFirst.textState.setVisible(true);
 
 					}else if(sensors.get(i).sensorType.toUpperCase().equals("HUMIDITY"))
 					{
@@ -326,6 +358,10 @@ public class BackEndSensorFirst implements ActionListener {
 						btn.setBounds(30, 30,30,30);
 						sensorFirst.panelLibrary.add(btn);
 						btn.setVisible(true);
+						sensorFirst.btnArrterLalerte.setVisible(true);
+						sensorFirst.txtDesCapteurs.setVisible(true);
+						sensorFirst.txtSensor.setVisible(true);
+						sensorFirst.textState.setVisible(true);
 
 					}else {}
 
@@ -385,6 +421,10 @@ public class BackEndSensorFirst implements ActionListener {
 						btn.setBounds(30, 30,30,30);
 						sensorFirst.panelLivingRoom.add(btn);
 						btn.setVisible(true);
+						sensorFirst.btnArrterLalerte.setVisible(true);
+						sensorFirst.txtDesCapteurs.setVisible(true);
+						sensorFirst.txtSensor.setVisible(true);
+						sensorFirst.textState.setVisible(true);
 
 					}else if(sensors.get(i).sensorType.toUpperCase().equals("HUMIDITY"))
 					{
@@ -393,6 +433,10 @@ public class BackEndSensorFirst implements ActionListener {
 						btn.setBounds(30, 30,30,30);
 						sensorFirst.panelLivingRoom.add(btn);
 						btn.setVisible(true);
+						sensorFirst.btnArrterLalerte.setVisible(true);
+						sensorFirst.txtDesCapteurs.setVisible(true);
+						sensorFirst.txtSensor.setVisible(true);
+						sensorFirst.textState.setVisible(true);
 
 					}else {}
 
@@ -413,24 +457,24 @@ public class BackEndSensorFirst implements ActionListener {
 
 	public List<Sensor> getDeserializedObject(String jsQuery){		
 
-		
+
 		List<Sensor> liste = new ArrayList();
-//		Jsonb jsonb = JsonbBuilder.create();
-//
-//		final GroupeSensors groupe = jsonb.fromJson(jsQuery, GroupeSensors.class);
-//
-//		System.out.println(groupe);	
-		
+		//		Jsonb jsonb = JsonbBuilder.create();
+		//
+		//		final GroupeSensors groupe = jsonb.fromJson(jsQuery, GroupeSensors.class);
+		//
+		//		System.out.println(groupe);	
+
 		Jsonb jsonb = JsonbBuilder.create();
-		 
+
 		Sensor[] sensorArray = jsonb.fromJson(jsQuery, Sensor[].class);  
-		 
+
 		for(Sensor sensor : sensorArray) {
 			liste.add(sensor);
 			System.out.println(sensor);	
-		
+
 		}
-		
+
 		return liste;
 	}
 
@@ -439,7 +483,7 @@ public class BackEndSensorFirst implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 
