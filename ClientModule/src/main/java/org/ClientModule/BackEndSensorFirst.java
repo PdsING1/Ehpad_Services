@@ -25,6 +25,7 @@ public class BackEndSensorFirst implements ActionListener {
 	public String sensorName;
 	public String sensorType; 
 	public String state;
+	//ClientSocket client = new ClientSocket();
 
 
 	public BackEndSensorFirst(SensorFirst sensorFirst) {
@@ -37,7 +38,7 @@ public class BackEndSensorFirst implements ActionListener {
 	public void start(){
 
 		System.out.println("action Window Opened");
-		ClientSocket client = new ClientSocket();
+		//ClientSocket client = new ClientSocket();
 
 		Sensor sensor = new Sensor();
 		sensor.query = "SELECT";
@@ -59,7 +60,7 @@ public class BackEndSensorFirst implements ActionListener {
 
 
 
-		String answer = client.getSocket(result);
+		String answer = SocketConnection.returnClientSocket().getSocket(result);
 
 		List<Sensor> sensors = getDeserializedObject(answer);
 

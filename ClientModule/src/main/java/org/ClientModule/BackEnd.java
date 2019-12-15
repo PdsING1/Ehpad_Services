@@ -24,7 +24,7 @@ public class BackEnd implements ActionListener {
 	public String sensorType; 
 	public String state;
 	Sensor sensor;
-
+	//ClientSocket client = new ClientSocket();
 
 	public SensorInterface sensorInterface;
 
@@ -61,6 +61,7 @@ public class BackEnd implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		
 		if(e.getSource()== SensorInterface.getButtonSubmit()){
 			System.out.println("action button Submit");
 
@@ -96,10 +97,10 @@ public class BackEnd implements ActionListener {
 							//			System.out.println("toto1");
 							//ClientServerConnection.callSocket();
 
-							ClientSocket client = new ClientSocket();
+							//ClientSocket client = new ClientSocket();
 
 
-							String answer = client.getSocket(result);
+							String answer = SocketConnection.returnClientSocket().getSocket(result);
 						}else 
 						{
 							System.out.println("Le nom du capteur ne peut pas etre vide !");
@@ -154,10 +155,10 @@ public class BackEnd implements ActionListener {
 							//			System.out.println("toto1");
 							//ClientServerConnection.callSocket();
 
-							ClientSocket client = new ClientSocket();
+							//ClientSocket client = new ClientSocket();
 
 
-							String answer = client.getSocket(result);
+							String answer = SocketConnection.returnClientSocket().getSocket(result);
 						}else 
 						{
 							System.out.println("Le nom du capteur du capteur ne peut pas etre vide !");

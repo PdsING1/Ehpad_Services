@@ -4,6 +4,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
@@ -72,7 +74,7 @@ public class SensorFirst extends JPanel implements ActionListener{
 
 					SensorFirst window = new SensorFirst();
 					//window.setVisible(true);
-
+					
 
 
 
@@ -238,11 +240,13 @@ public class SensorFirst extends JPanel implements ActionListener{
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 
+				//frame.dispose();
 				sensor = new SensorInterface();
 
 				sensor.getFrame().setVisible(true);
-
-				//frame.dispose();
+                
+				
+			
 			}
 
 
@@ -290,6 +294,8 @@ public class SensorFirst extends JPanel implements ActionListener{
 		btnArrterLalerte.setBounds(504, 617, 208, 38);
 		btnArrterLalerte.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				frame.dispose();
+				refresh();
 				System.out.println("action button UPDATE");
 
 				Sensor sensor = new Sensor();
@@ -315,10 +321,10 @@ public class SensorFirst extends JPanel implements ActionListener{
 								System.out.println(result);
 
 
-								ClientSocket client = new ClientSocket();
+								//ClientSocket client = new ClientSocket();
 
 
-								String answer = client.getSocket(result);
+								String answer = SocketConnection.returnClientSocket().getSocket(result);
 							}else 
 							{
 								System.out.println("La localisation ne peut pas etre vide !");
@@ -377,6 +383,17 @@ public class SensorFirst extends JPanel implements ActionListener{
 	public void initialize()
 	{
 
+		
+		try {
+			SocketConnection.callSocket();
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		back = new BackEndSensorFirst(this);
 		back.start();
 	}
@@ -384,7 +401,7 @@ public class SensorFirst extends JPanel implements ActionListener{
 	public void refresh()
 	{
 		System.out.println("action Window Opened");
-		ClientSocket client = new ClientSocket();
+		//ClientSocket client = new ClientSocket();
 
 		Sensor sensor = new Sensor();
 		sensor.query = "SELECT";
@@ -403,7 +420,7 @@ public class SensorFirst extends JPanel implements ActionListener{
 
 			SensorFirst sensorFirst = new SensorFirst();
 
-			String answer = client.getSocket(result);
+			String answer = SocketConnection.returnClientSocket().getSocket(result);
 
 			List<Sensor> sensors = getDeserializedObject(answer);
 

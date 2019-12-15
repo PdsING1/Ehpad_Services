@@ -18,17 +18,35 @@ public class ClientSocket
 	private  BufferedReader readFromServer;
 	private  PrintWriter writeToServer ;
 	Socket socket;
+	
+	public ClientSocket()
+	{
+		
+	}
+	
+	
+	public void beginSocket() throws UnsupportedEncodingException, IOException
+	{
+		try {
+			socket = new Socket(serverName, serverPort);
+		} catch (UnknownHostException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		writeToServer = new PrintWriter(new OutputStreamWriter(socket.getOutputStream(), "UTF-8"), true);	
+		readFromServer = new BufferedReader(new InputStreamReader(socket.getInputStream(), "UTF-8"));
+		
+	}
 
 
 		public  String getSocket(String serializer) {
 			try {
 
-				socket = new Socket(serverName, serverPort);
-			
-
-				writeToServer = new PrintWriter(new OutputStreamWriter(socket.getOutputStream(), "UTF-8"), true);	
-				readFromServer = new BufferedReader(new InputStreamReader(socket.getInputStream(), "UTF-8"));
-
+				
 				String answerServerClient = "";
 
 
