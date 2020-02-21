@@ -78,6 +78,7 @@ public class Pool implements ConnectionPool {
 	    private int connectionsAvailableNb;
 	    private int connectionsRecentlyCreated;
 	    private Vector<Connection> connections;
+	    
 	    String url="jdbc:mysql://localhost:3306/ehpadservices?serverTimezone=UTC";
 		String userName="root";
 		String pwd = "";
@@ -87,12 +88,12 @@ public class Pool implements ConnectionPool {
 			connectionsRecentlyCreated = 0;
 			try
 			{
-				connectionsAvailableNb = 10;
+				connectionsAvailableNb = 20;
 			}
 			catch(Exception e)
 			{
 				
-				connectionsAvailableNb = 10;
+				connectionsAvailableNb = 20;
 			}
 
 			} 

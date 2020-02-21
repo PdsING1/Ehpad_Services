@@ -25,7 +25,7 @@ public class Server
 	boolean isRunning = true;
 	static final int port = 9999;
 	static ServerSocket server ;
-
+	Socket socket ;
 
 
 
@@ -47,9 +47,9 @@ public class Server
 	public void open() 
 	{
 
-		String url="jdbc:mysql://localhost:3306/ehpadservices?serverTimezone=UTC";
-		String userName="root";
-		String pwd = "";
+		final String url="jdbc:mysql://localhost:3306/ehpadservices?serverTimezone=UTC";
+		final String userName="root";
+		final String pwd = "";
 
 		DataSource.startConnectionPool();
 
@@ -59,13 +59,15 @@ public class Server
 				while(isRunning == true){
 					try {
 
-						Socket socket = server.accept();
+					socket = server.accept();
 
 
 						Connection con = DataSource.getConnection(url, userName, pwd);
 						Thread th = new Thread (new ThreadConnection(socket, con));
 						th.start();
-
+						
+						
+                         
 
 					} catch (IOException e) {
 						e.printStackTrace();
@@ -73,6 +75,7 @@ public class Server
 				}
 
 				try {
+					socket.close();
 					server.close();
 				} catch (IOException e) {
 					e.printStackTrace();

@@ -40,17 +40,14 @@ public class ThreadConnection implements Runnable {
 	@Override
 	public void run() {
 
-
-
-
-		try {
-
+	try {
+            soc.setSoTimeout(50000);
 			queryClient = new BufferedReader(new InputStreamReader(soc.getInputStream(), "UTF-8"));
 			answerServer = new PrintWriter(new OutputStreamWriter(soc.getOutputStream(), "UTF-8"), true);
 
 			System.out.println("start serveur");
 			while (true){
-
+                
 				String rq = queryClient.readLine();
 				System.out.println(rq);
 				if ((rq == null) || rq.equalsIgnoreCase("QUIT")) {
@@ -78,7 +75,7 @@ public class ThreadConnection implements Runnable {
 //							{
 //								System.out.println("bool2");
 						
-						ConnectionBDD.insertSensors(outputrq, connection);
+						ConnectionBDD.insertSensorByLocationAndByType(outputrq, connection);
 //						
 //							}else 
 //							{

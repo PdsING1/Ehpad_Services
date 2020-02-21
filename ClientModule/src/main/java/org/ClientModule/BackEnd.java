@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.io.IOException;
 
 import javax.json.bind.Jsonb;
 
@@ -74,10 +75,10 @@ public class BackEnd implements ActionListener {
 			sensor.state =  SensorInterface.getTextState();
 
 
-			if(SensorInterface.getTextLocation().toUpperCase().equals("CORRIDOR1") ||SensorInterface.getTextLocation().toUpperCase().equals("CORRIDOR2") || SensorInterface.getTextLocation().toUpperCase().equals("KITCHEN") || SensorInterface.getTextLocation().toUpperCase().equals("LIVINGROOM")|| SensorInterface.getTextLocation().toUpperCase().equals("LIBRARY"))
+			if(SensorInterface.getTextLocation().toUpperCase().trim().equals("CORRIDOR1") ||SensorInterface.getTextLocation().toUpperCase().trim().equals("CORRIDOR2") || SensorInterface.getTextLocation().toUpperCase().equals("KITCHEN") || SensorInterface.getTextLocation().toUpperCase().trim().equals("LIVINGROOM")|| SensorInterface.getTextLocation().toUpperCase().equals("LIBRARY"))
 			{
 
-				if(SensorInterface.getTextType().toUpperCase().equals("SMOKE") || SensorInterface.getTextType().toUpperCase().equals("HUMIDITY"))
+				if(SensorInterface.getTextType().toUpperCase().equals("SMOKE")|| SensorInterface.getTextType().toUpperCase().equals("MOVEMENT") || SensorInterface.getTextType().toUpperCase().equals("HUMIDITY"))
 				{
 					if(SensorInterface.getTextState().toUpperCase().equals("ON") || SensorInterface.getTextState().toUpperCase().equals("OFF") || SensorInterface.getTextState().toUpperCase().equals("ALERTE") )
 					{
@@ -100,7 +101,12 @@ public class BackEnd implements ActionListener {
 							//ClientSocket client = new ClientSocket();
 
 
-							String answer = SocketConnection.returnClientSocket().getSocket(result);
+							try {
+								String answer = SocketConnection.returnClientSocket().getSocket(result);
+							} catch (IOException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
 						}else 
 						{
 							System.out.println("Le nom du capteur ne peut pas etre vide !");
@@ -121,6 +127,14 @@ public class BackEnd implements ActionListener {
 			{
 				System.out.println("La localisation n'existe pas !");
 			}
+			
+//			try {
+//				SensorFirst sensorfirst = new SensorFirst();
+//				
+//			} catch (IOException e2) {
+//				// TODO Auto-generated catch block
+//				e2.printStackTrace();
+//			}
 		}
 		else if (e.getSource()== SensorInterface.getButtonSupprimer()){
 			System.out.println("action button Delete");
@@ -133,10 +147,10 @@ public class BackEnd implements ActionListener {
 			sensor.sensorType =  SensorInterface.getTextType();
 			sensor.state =  SensorInterface.getTextState();
 
-			if(SensorInterface.getTextLocation().toUpperCase().equals("CORRIDOR1") ||SensorInterface.getTextLocation().toUpperCase().equals("CORRIDOR2") || SensorInterface.getTextLocation().toUpperCase().equals("KITCHEN") || SensorInterface.getTextLocation().toUpperCase().equals("LIVINGROOM")|| SensorInterface.getTextLocation().toUpperCase().equals("LIBRARY"))
+			if(SensorInterface.getTextLocation().toUpperCase().trim().equals("CORRIDOR1") ||SensorInterface.getTextLocation().toUpperCase().trim().equals("CORRIDOR2") || SensorInterface.getTextLocation().toUpperCase().equals("KITCHEN") || SensorInterface.getTextLocation().toUpperCase().trim().equals("LIVINGROOM")|| SensorInterface.getTextLocation().toUpperCase().equals("LIBRARY"))
 			{
 
-				if(SensorInterface.getTextType().toUpperCase().equals("SMOKE") || SensorInterface.getTextType().toUpperCase().equals("HUMIDITY"))
+				if(SensorInterface.getTextType().toUpperCase().equals("SMOKE") || SensorInterface.getTextType().toUpperCase().equals("HUMIDITY") || SensorInterface.getTextType().toUpperCase().equals("MOVEMENT"))
 				{
 					if(SensorInterface.getTextState().toUpperCase().equals("ON") || SensorInterface.getTextState().toUpperCase().equals("OFF") || SensorInterface.getTextState().toUpperCase().equals("ALERTE") )
 					{
@@ -158,7 +172,12 @@ public class BackEnd implements ActionListener {
 							//ClientSocket client = new ClientSocket();
 
 
-							String answer = SocketConnection.returnClientSocket().getSocket(result);
+							try {
+								String answer = SocketConnection.returnClientSocket().getSocket(result);
+							} catch (IOException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
 						}else 
 						{
 							System.out.println("Le nom du capteur du capteur ne peut pas etre vide !");
@@ -179,7 +198,15 @@ public class BackEnd implements ActionListener {
 				System.out.println("La localisation n'existe pas !");
 			}
 
-
+		
+//			try {
+//				SensorFirst sensorfirst = new SensorFirst();
+//				sensorfirst.refresh();
+//			} catch (IOException e2) {
+//				// TODO Auto-generated catch block
+//				e2.printStackTrace();
+//			}
+			
 		}
 
 	} 

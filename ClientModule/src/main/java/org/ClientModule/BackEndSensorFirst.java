@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
@@ -35,7 +36,7 @@ public class BackEndSensorFirst implements ActionListener {
 
 
 
-	public void start(){
+	public void start() throws IOException{
 
 		System.out.println("action Window Opened");
 		//ClientSocket client = new ClientSocket();
@@ -68,7 +69,7 @@ public class BackEndSensorFirst implements ActionListener {
 		for (int i = 0; i < sensors.size (); i++)
 		{
 
-			if(	sensors.get(i).location.toUpperCase().equals("CORRIDOR1"))
+			if(	sensors.get(i).location.toUpperCase().trim().equals("CORRIDOR1"))
 			{
 				if(sensors.get(i).state.toUpperCase().equals("ON"))
 				{
@@ -92,7 +93,16 @@ public class BackEndSensorFirst implements ActionListener {
 						sensorFirst.corridor1.add(btn);
 						btn.setVisible(true);
 
-					}else {}
+					}else if(sensors.get(i).sensorType.toUpperCase().equals("MOVEMENT"))
+					{
+						JButton btn = new JButton("M");
+						btn.setBackground(Color.GREEN);
+						btn.setBounds(50, 50,50,50);
+						sensorFirst.corridor1.add(btn);
+						btn.setVisible(true);
+
+					}
+					else {}
 
 				}else if(sensors.get(i).state.toUpperCase().equals("OFF"))
 				{
@@ -107,6 +117,15 @@ public class BackEndSensorFirst implements ActionListener {
 					}else if(sensors.get(i).sensorType.toUpperCase().equals("HUMIDITY"))
 					{
 						JButton btn = new JButton("H");
+						btn.setBackground(Color.GRAY);
+						btn.setBounds(50, 50,50,50);
+						sensorFirst.corridor1.add(btn);
+						btn.setVisible(true);
+
+					}
+					else if(sensors.get(i).sensorType.toUpperCase().equals("MOVEMENT"))
+					{
+						JButton btn = new JButton("M");
 						btn.setBackground(Color.GRAY);
 						btn.setBounds(50, 50,50,50);
 						sensorFirst.corridor1.add(btn);
@@ -140,14 +159,27 @@ public class BackEndSensorFirst implements ActionListener {
 						sensorFirst.txtSensor.setVisible(true);
 						sensorFirst.textState.setVisible(true);
 
-					}else {}
+					}else if(sensors.get(i).sensorType.toUpperCase().equals("MOVEMENT"))
+					{
+						JButton btn = new JButton("M");
+						btn.setBackground(Color.RED);
+						btn.setBounds(50, 50,50,50);
+						sensorFirst.corridor1.add(btn);
+						btn.setVisible(true);
+						sensorFirst.btnArrterLalerte.setVisible(true);
+						sensorFirst.txtDesCapteurs.setVisible(true);
+						sensorFirst.txtSensor.setVisible(true);
+						sensorFirst.textState.setVisible(true);
+
+					}
+					else {}
 
 				}else
 				{
 
 				}
 
-			}else if(	sensors.get(i).location.toUpperCase().equals("CORRIDOR2"))
+			}else if(	sensors.get(i).location.toUpperCase().trim().equals("CORRIDOR2"))
 			{
 				if(sensors.get(i).state.toUpperCase().equals("ON"))
 				{
@@ -162,6 +194,15 @@ public class BackEndSensorFirst implements ActionListener {
 					}else if(sensors.get(i).sensorType.toUpperCase().equals("HUMIDITY"))
 					{
 						JButton btn = new JButton("H");
+						btn.setBackground(Color.GREEN);
+						btn.setBounds(50, 50,50,50);
+						sensorFirst.panelCorridor2.add(btn);
+						btn.setVisible(true);
+
+					}
+					else if(sensors.get(i).sensorType.toUpperCase().equals("MOVEMENT"))
+					{
+						JButton btn = new JButton("M");
 						btn.setBackground(Color.GREEN);
 						btn.setBounds(50, 50,50,50);
 						sensorFirst.panelCorridor2.add(btn);
@@ -187,6 +228,15 @@ public class BackEndSensorFirst implements ActionListener {
 						sensorFirst.panelCorridor2.add(btn);
 						btn.setVisible(true);
 
+					}
+					else if(sensors.get(i).sensorType.toUpperCase().equals("MOVEMENT"))
+					{
+						JButton btn = new JButton("M");
+						btn.setBackground(Color.GRAY);
+						btn.setBounds(50, 50,50,50);
+						sensorFirst.panelCorridor2.add(btn);
+						btn.setVisible(true);
+
 					}else {}
 
 				}else if(sensors.get(i).state.toUpperCase().equals("ALERTE"))
@@ -206,6 +256,19 @@ public class BackEndSensorFirst implements ActionListener {
 					}else if(sensors.get(i).sensorType.toUpperCase().equals("HUMIDITY"))
 					{
 						JButton btn = new JButton("H");
+						btn.setBackground(Color.RED);
+						btn.setBounds(50, 50,50,50);
+						sensorFirst.panelCorridor2.add(btn);
+						btn.setVisible(true);
+						sensorFirst.btnArrterLalerte.setVisible(true);
+						sensorFirst.txtDesCapteurs.setVisible(true);
+						sensorFirst.txtSensor.setVisible(true);
+						sensorFirst.textState.setVisible(true);
+
+					}
+					else if(sensors.get(i).sensorType.toUpperCase().equals("MOVEMENT"))
+					{
+						JButton btn = new JButton("M");
 						btn.setBackground(Color.RED);
 						btn.setBounds(50, 50,50,50);
 						sensorFirst.panelCorridor2.add(btn);
@@ -243,6 +306,15 @@ public class BackEndSensorFirst implements ActionListener {
 						sensorFirst.kitchen.add(btn);
 						btn.setVisible(true);
 
+					}
+					else if(sensors.get(i).sensorType.toUpperCase().equals("MOVEMENT"))
+					{
+						JButton btn = new JButton("M");
+						btn.setBackground(Color.GREEN);
+						btn.setBounds(30, 30,30,30);
+						sensorFirst.kitchen.add(btn);
+						btn.setVisible(true);
+
 					}else {}
 
 				}else if(sensors.get(i).state.toUpperCase().equals("OFF"))
@@ -258,6 +330,15 @@ public class BackEndSensorFirst implements ActionListener {
 					}else if(sensors.get(i).sensorType.toUpperCase().equals("HUMIDITY"))
 					{
 						JButton btn = new JButton("H");
+						btn.setBackground(Color.GRAY);
+						btn.setBounds(30, 30,30,30);
+						sensorFirst.kitchen.add(btn);
+						btn.setVisible(true);
+
+					}
+					else if(sensors.get(i).sensorType.toUpperCase().equals("MOVEMENT"))
+					{
+						JButton btn = new JButton("M");
 						btn.setBackground(Color.GRAY);
 						btn.setBounds(30, 30,30,30);
 						sensorFirst.kitchen.add(btn);
@@ -282,6 +363,18 @@ public class BackEndSensorFirst implements ActionListener {
 					}else if(sensors.get(i).sensorType.toUpperCase().equals("HUMIDITY"))
 					{
 						JButton btn = new JButton("H");
+						btn.setBackground(Color.RED);
+						btn.setBounds(30, 30,30,30);
+						sensorFirst.kitchen.add(btn);
+						btn.setVisible(true);
+						sensorFirst.btnArrterLalerte.setVisible(true);
+						sensorFirst.txtDesCapteurs.setVisible(true);
+						sensorFirst.txtSensor.setVisible(true);
+						sensorFirst.textState.setVisible(true);
+					}
+					else if(sensors.get(i).sensorType.toUpperCase().equals("MOVEMENT"))
+					{
+						JButton btn = new JButton("M");
 						btn.setBackground(Color.RED);
 						btn.setBounds(30, 30,30,30);
 						sensorFirst.kitchen.add(btn);
@@ -317,6 +410,15 @@ public class BackEndSensorFirst implements ActionListener {
 						sensorFirst.panelLibrary.add(btn);
 						btn.setVisible(true);
 
+					}
+					else if(sensors.get(i).sensorType.toUpperCase().equals("MOVEMENT"))
+					{
+						JButton btn = new JButton("M");
+						btn.setBackground(Color.GREEN);
+						btn.setBounds(30, 30,30,30);
+						sensorFirst.panelLibrary.add(btn);
+						btn.setVisible(true);
+
 					}else {}
 
 				}else if(sensors.get(i).state.toUpperCase().equals("OFF"))
@@ -332,6 +434,14 @@ public class BackEndSensorFirst implements ActionListener {
 					}else if(sensors.get(i).sensorType.toUpperCase().equals("HUMIDITY"))
 					{
 						JButton btn = new JButton("H");
+						btn.setBackground(Color.GRAY);
+						btn.setBounds(30, 30,30,30);
+						sensorFirst.panelLibrary.add(btn);
+						btn.setVisible(true);
+					}
+					else if(sensors.get(i).sensorType.toUpperCase().equals("MOVEMENT"))
+					{
+						JButton btn = new JButton("M");
 						btn.setBackground(Color.GRAY);
 						btn.setBounds(30, 30,30,30);
 						sensorFirst.panelLibrary.add(btn);
@@ -364,6 +474,19 @@ public class BackEndSensorFirst implements ActionListener {
 						sensorFirst.txtSensor.setVisible(true);
 						sensorFirst.textState.setVisible(true);
 
+					}
+					else if(sensors.get(i).sensorType.toUpperCase().equals("MOVEMENT"))
+					{
+						JButton btn = new JButton("M");
+						btn.setBackground(Color.RED);
+						btn.setBounds(30, 30,30,30);
+						sensorFirst.panelLibrary.add(btn);
+						btn.setVisible(true);
+						sensorFirst.btnArrterLalerte.setVisible(true);
+						sensorFirst.txtDesCapteurs.setVisible(true);
+						sensorFirst.txtSensor.setVisible(true);
+						sensorFirst.textState.setVisible(true);
+
 					}else {}
 
 				}else
@@ -371,7 +494,7 @@ public class BackEndSensorFirst implements ActionListener {
 
 				}
 
-			}else if(	sensors.get(i).location.toUpperCase().equals("LIVINGROOM"))
+			}else if(	sensors.get(i).location.toUpperCase().trim().equals("LIVINGROOM"))
 			{
 				if(sensors.get(i).state.toUpperCase().equals("ON"))
 				{
@@ -391,6 +514,15 @@ public class BackEndSensorFirst implements ActionListener {
 						sensorFirst.panelLivingRoom.add(btn);
 						btn.setVisible(true);
 
+					}
+					else if(sensors.get(i).sensorType.toUpperCase().equals("MOVEMENT"))
+					{
+						JButton btn = new JButton("M");
+						btn.setBackground(Color.GREEN);
+						btn.setBounds(30, 30,30,30);
+						sensorFirst.panelLivingRoom.add(btn);
+						btn.setVisible(true);
+
 					}else {}
 
 				}else if(sensors.get(i).state.toUpperCase().equals("OFF"))
@@ -406,6 +538,15 @@ public class BackEndSensorFirst implements ActionListener {
 					}else if(sensors.get(i).sensorType.toUpperCase().equals("HUMIDITY"))
 					{
 						JButton btn = new JButton("H");
+						btn.setBackground(Color.GRAY);
+						btn.setBounds(30, 30,30,30);
+						sensorFirst.panelLivingRoom.add(btn);
+						btn.setVisible(true);
+
+					}
+					else if(sensors.get(i).sensorType.toUpperCase().equals("MOVEMENT"))
+					{
+						JButton btn = new JButton("M");
 						btn.setBackground(Color.GRAY);
 						btn.setBounds(30, 30,30,30);
 						sensorFirst.panelLivingRoom.add(btn);
@@ -430,6 +571,19 @@ public class BackEndSensorFirst implements ActionListener {
 					}else if(sensors.get(i).sensorType.toUpperCase().equals("HUMIDITY"))
 					{
 						JButton btn = new JButton("H");
+						btn.setBackground(Color.RED);
+						btn.setBounds(30, 30,30,30);
+						sensorFirst.panelLivingRoom.add(btn);
+						btn.setVisible(true);
+						sensorFirst.btnArrterLalerte.setVisible(true);
+						sensorFirst.txtDesCapteurs.setVisible(true);
+						sensorFirst.txtSensor.setVisible(true);
+						sensorFirst.textState.setVisible(true);
+
+					}
+					else if(sensors.get(i).sensorType.toUpperCase().equals("MOVEMENT"))
+					{
+						JButton btn = new JButton("M");
 						btn.setBackground(Color.RED);
 						btn.setBounds(30, 30,30,30);
 						sensorFirst.panelLivingRoom.add(btn);

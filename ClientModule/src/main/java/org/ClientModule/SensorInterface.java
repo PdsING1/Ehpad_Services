@@ -108,7 +108,7 @@ public class SensorInterface extends JPanel implements ActionListener {
 	private JTextField Legende;
 	
 	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
+		new Thread(new Runnable() {
 			public void run() {
 
 
@@ -124,7 +124,7 @@ public class SensorInterface extends JPanel implements ActionListener {
 				e.printStackTrace();
 				}
 			}
-		});
+		}).start();
 	}
 	
 	public SensorInterface() {
@@ -235,20 +235,20 @@ public class SensorInterface extends JPanel implements ActionListener {
 
 		JTextPane txtpnStateOn = new JTextPane();
 		txtpnStateOn.setEditable(false);
-		txtpnStateOn.setText("State (ON /OFF):");
+		txtpnStateOn.setText("State : (ON /OFF / ALERTE)");
 		txtpnStateOn.setForeground(new Color(240, 248, 255));
 		txtpnStateOn.setFont(new Font("Sitka Text", Font.PLAIN, 20));
 		txtpnStateOn.setBackground(new Color(0, 128, 128));
-		txtpnStateOn.setBounds(160, 512, 171, 41);
+		txtpnStateOn.setBounds(160, 512, 200, 100);
 		frame.getContentPane().add(txtpnStateOn);
 		
 		Legende = new JTextField();
 		Legende.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		Legende.setEditable(false);
-		Legende.setText("Location : Corridor1 / Corridor2/ Kitchen / LivingRoom / Library          Sensor Type : Smoke/Humidity        State : ON/OFF/ALERTE");
+		Legende.setText("Location : Corridor1 / Corridor2/ Kitchen / LivingRoom / Library   Sensor Type : Smoke/Humidity/MOVEMENT   State : ON/OFF/ALERTE");
 		Legende.setForeground(new Color(255, 255, 224));
 		Legende.setBackground(new Color(0, 128, 128));
-		Legende.setBounds(10, 119, 760, 105);
+		Legende.setBounds(10, 119, 800, 150);
 		frame.getContentPane().add(Legende);
 		Legende.setColumns(10);
 		Legende.setVisible(true);

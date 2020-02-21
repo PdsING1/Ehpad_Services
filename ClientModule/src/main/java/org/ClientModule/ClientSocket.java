@@ -18,17 +18,18 @@ public class ClientSocket
 	private  BufferedReader readFromServer;
 	private  PrintWriter writeToServer ;
 	Socket socket;
-	
+
 	public ClientSocket()
 	{
-		
+
 	}
-	
-	
+
+
 	public void beginSocket() throws UnsupportedEncodingException, IOException
 	{
 		try {
 			socket = new Socket(serverName, serverPort);
+			socket.setSoTimeout(5000);
 		} catch (UnknownHostException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -36,57 +37,50 @@ public class ClientSocket
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		writeToServer = new PrintWriter(new OutputStreamWriter(socket.getOutputStream(), "UTF-8"), true);	
 		readFromServer = new BufferedReader(new InputStreamReader(socket.getInputStream(), "UTF-8"));
+
+	}
+
+
+	public  String getSocket(String serializer) throws IOException {
+
+
+
+		// Send the request to the server
+		System.out.println("WriteToServer will be executed");
+		System.out.println(serializer);
+
+		writeToServer.println(serializer);
+		System.out.println("WriteToServer have been executed");
+
 		
-	}
+		String answerServerClient = "";
 
 
-		public  String getSocket(String serializer) {
-			try {
+			answerServerClient = (String) readFromServer.readLine();
+			System.out.println(answerServerClient);
+			
+			
 
-				
-				String answerServerClient = "";
+			return answerServerClient;
+			
+		
+			
+		// readFromServer.close();
 
-
-				// Send the request to the server
-				System.out.println("WriteToServer will be executed");
-				System.out.println(serializer);
-				writeToServer.println(serializer);
-				System.out.println("WriteToServer have been executed");
-
-
-				// Receive an answer from the the server
-				answerServerClient = readFromServer.readLine();
-				System.out.println("toto6");
-
-				return answerServerClient;
+		//writeToServer.close();
+		//		socket.close();
 
 
-				//return socket;
 
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				//return null;
-			}
 
-			try {
-				readFromServer.close();
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-			writeToServer.close();
-			try {
-				socket.close();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			return "";
 
-		}
+
+
+
 
 	}
+
+}

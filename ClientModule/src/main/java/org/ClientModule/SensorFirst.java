@@ -6,6 +6,7 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
@@ -64,30 +65,38 @@ public class SensorFirst extends JPanel implements ActionListener{
 
 
 
-	public static void main(String[] args )
+	public static void main(String[] args ) throws InvocationTargetException, InterruptedException
 	{
-		EventQueue.invokeLater(new Runnable() {
+		final Thread th = new Thread(new Runnable() {
 			public void run() {
-
-
-				try {
-
-					SensorFirst window = new SensorFirst();
-					//window.setVisible(true);
-					
-
-
-
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
+		            	try {
+		            		EventQueue.invokeAndWait(new Runnable() {
+		            			public void run() {
+		            				SensorFirst window;
+									try {
+										window = new SensorFirst();
+										window.setEnabled(true);
+									} catch (IOException e) {
+										// TODO Auto-generated catch block
+										e.printStackTrace();
+									}
+		         					
+		                             
+		            			}
+		            		});
+		            	} catch (InterruptedException ex1) {
+		            		ex1.printStackTrace();
+		            	} catch (InvocationTargetException ex2) {
+		            		ex2.printStackTrace();
+		            	}
+				
 			}
 		});
+		th.start();	
 	}
 
 
-
-	public SensorFirst() {
+	public SensorFirst() throws IOException {
 
 		initialize();
 	}
@@ -230,8 +239,8 @@ public class SensorFirst extends JPanel implements ActionListener{
 		txtpnHHumidity.setEditable(false);
 		txtpnHHumidity.setForeground(new Color(255, 255, 255));
 		txtpnHHumidity.setBackground(new Color(0, 128, 128));
-		txtpnHHumidity.setText("H : humidity sensor / F : smoke sensor");
-		txtpnHHumidity.setBounds(42, 575, 274, 31);
+		txtpnHHumidity.setText("H : humidity sensor / F : smoke sensor / M : movement sensor");
+		txtpnHHumidity.setBounds(42, 575,370, 50);
 		frame.getContentPane().add(txtpnHHumidity);
 
 		JButton btnNewButton = new JButton("Ajouter / Supprimer un capteur");
@@ -244,7 +253,7 @@ public class SensorFirst extends JPanel implements ActionListener{
 				sensor = new SensorInterface();
 
 				sensor.getFrame().setVisible(true);
-                
+               // frame.dispose();
 				
 			
 			}
@@ -258,13 +267,13 @@ public class SensorFirst extends JPanel implements ActionListener{
 		txtSensor.setForeground(new Color(255, 255, 255));
 		txtSensor.setBackground(new Color(0, 128, 128));
 		txtSensor.setText("Entrez le nom de la pièce où vous souahitez eteindre l'alerte ");
-		txtSensor.setBounds(42, 680, 274, 101);
+		txtSensor.setBounds(42, 700, 350, 70);
 		frame.getContentPane().add(txtSensor); 
 		txtSensor.setVisible(false);
 		
 		 textState= new JTextField();
 		 textState.setBackground(new Color(240, 248, 255));
-		 textState.setBounds(42, 790, 100, 100);
+		 textState.setBounds(42, 770, 350, 50);
 		 frame.getContentPane().add(textState);
 		 txtSensor.setVisible(false);
 		
@@ -276,12 +285,17 @@ public class SensorFirst extends JPanel implements ActionListener{
 		JButton btnNewButtonRefresh = new JButton("Refresh");
 		btnNewButtonRefresh.setEnabled(true);
 		btnNewButton.setBackground(new Color(211, 211, 211));
-		btnNewButtonRefresh.setBounds(504, 750, 208, 38);
+		btnNewButtonRefresh.setBounds(504, 770, 208, 38);
 		btnNewButtonRefresh.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 
 				frame.dispose();
-				refresh();
+				try {
+					refresh();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				
 			}
 
@@ -291,11 +305,16 @@ public class SensorFirst extends JPanel implements ActionListener{
 
 		btnArrterLalerte = new JButton("Arrêter l'alerte");
 		btnArrterLalerte.setBackground(new Color(211, 211, 211));
-		btnArrterLalerte.setBounds(504, 617, 208, 38);
+		btnArrterLalerte.setBounds(504, 700, 208, 38);
 		btnArrterLalerte.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				frame.dispose();
-				refresh();
+			//	frame.dispose();
+//				try {
+//					refresh();
+//				} catch (IOException e1) {
+//					// TODO Auto-generated catch block
+//					e1.printStackTrace();
+//				}
 				System.out.println("action button UPDATE");
 
 				Sensor sensor = new Sensor();
@@ -306,7 +325,7 @@ public class SensorFirst extends JPanel implements ActionListener{
 				sensor.state =  "ALERTE";
 
 
-				if(textState.getText().toUpperCase().equals("CORRIDOR1") ||textState.getText().toUpperCase().equals("CORRIDOR2") || textState.getText().toUpperCase().equals("KITCHEN") || textState.getText().toUpperCase().equals("LIVINGROOM")|| textState.getText().toUpperCase().equals("LIBRARY"))
+				if(textState.getText().toUpperCase().trim().equals("CORRIDOR1") ||textState.getText().toUpperCase().trim().equals("CORRIDOR2") || textState.getText().toUpperCase().trim().equals("KITCHEN") || textState.getText().toUpperCase().trim().equals("LIVINGROOM")|| textState.getText().toUpperCase().trim().equals("LIBRARY"))
 				{
 
 					
@@ -324,7 +343,13 @@ public class SensorFirst extends JPanel implements ActionListener{
 								//ClientSocket client = new ClientSocket();
 
 
-								String answer = SocketConnection.returnClientSocket().getSocket(result);
+								try {
+									 SocketConnection.returnClientSocket().getSocket(result);
+									 
+								} catch (IOException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
 							}else 
 							{
 								System.out.println("La localisation ne peut pas etre vide !");
@@ -337,7 +362,13 @@ public class SensorFirst extends JPanel implements ActionListener{
 						System.out.println("La localisation n'existe pas !");
 					}
 						
-			
+			try {
+				frame.setVisible(false);
+				refresh();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 				
 			}
 
@@ -358,7 +389,7 @@ public class SensorFirst extends JPanel implements ActionListener{
 		txtDesCapteurs.setText("Attention: Des capteurs sont en alerte !");
 		txtDesCapteurs.setForeground(new Color(255, 255, 255));
 		txtDesCapteurs.setBackground(new Color(128, 0, 0));
-		txtDesCapteurs.setBounds(42, 617, 286, 38);
+		txtDesCapteurs.setBounds(42, 650, 286, 38);
 		frame.getContentPane().add(txtDesCapteurs);
 		txtDesCapteurs.setColumns(10);
 
@@ -380,7 +411,7 @@ public class SensorFirst extends JPanel implements ActionListener{
 
 	}
 
-	public void initialize()
+	public void initialize() throws IOException
 	{
 
 		
@@ -398,7 +429,7 @@ public class SensorFirst extends JPanel implements ActionListener{
 		back.start();
 	}
 
-	public void refresh()
+	public void refresh() throws IOException
 	{
 		System.out.println("action Window Opened");
 		//ClientSocket client = new ClientSocket();
@@ -428,7 +459,7 @@ public class SensorFirst extends JPanel implements ActionListener{
 			for (int i = 0; i < sensors.size (); i++)
 			{
 
-				if(	sensors.get(i).location.toUpperCase().equals("CORRIDOR1"))
+				if(	sensors.get(i).location.toUpperCase().trim().equals("CORRIDOR1"))
 				{
 					if(sensors.get(i).state.toUpperCase().equals("ON"))
 					{
@@ -444,9 +475,18 @@ public class SensorFirst extends JPanel implements ActionListener{
 
 							btn.setVisible(true);
 
-						}else if(sensors.get(i).sensorType.toUpperCase().equals("HUMIDITY"))
+						}else if(sensors.get(i).sensorType.toUpperCase().trim().equals("HUMIDITY"))
 						{
 							JButton btn = new JButton("H");
+							btn.setBackground(Color.GREEN);
+							btn.setBounds(50, 50,50,50);
+							sensorFirst.corridor1.add(btn);
+							btn.setVisible(true);
+
+						}
+						else if(sensors.get(i).sensorType.toUpperCase().trim().equals("MOVEMENT"))
+						{
+							JButton btn = new JButton("M");
 							btn.setBackground(Color.GREEN);
 							btn.setBounds(50, 50,50,50);
 							sensorFirst.corridor1.add(btn);
@@ -467,6 +507,14 @@ public class SensorFirst extends JPanel implements ActionListener{
 						}else if(sensors.get(i).sensorType.toUpperCase().equals("HUMIDITY"))
 						{
 							JButton btn = new JButton("H");
+							btn.setBackground(Color.GRAY);
+							btn.setBounds(50, 50,50,50);
+							sensorFirst.corridor1.add(btn);
+							btn.setVisible(true);
+
+						}else if(sensors.get(i).sensorType.toUpperCase().equals("MOVEMENT"))
+						{
+							JButton btn = new JButton("M");
 							btn.setBackground(Color.GRAY);
 							btn.setBounds(50, 50,50,50);
 							sensorFirst.corridor1.add(btn);
@@ -501,6 +549,19 @@ public class SensorFirst extends JPanel implements ActionListener{
 							textState.setVisible(true);
 							
 
+						}else if(sensors.get(i).sensorType.toUpperCase().equals("MOVEMENT"))
+						{
+							JButton btn = new JButton("M");
+							btn.setBackground(Color.RED);
+							btn.setBounds(50, 50,50,50);
+							sensorFirst.corridor1.add(btn);
+							btn.setVisible(true);
+							btnArrterLalerte.setVisible(true);
+							txtDesCapteurs.setVisible(true);
+							txtSensor.setVisible(true);
+							textState.setVisible(true);
+							
+
 						}else {}
 
 					}else
@@ -508,7 +569,7 @@ public class SensorFirst extends JPanel implements ActionListener{
 
 					}
 
-				}else if(	sensors.get(i).location.toUpperCase().equals("CORRIDOR2"))
+				}else if(	sensors.get(i).location.toUpperCase().trim().equals("CORRIDOR2"))
 				{
 					if(sensors.get(i).state.toUpperCase().equals("ON"))
 					{
@@ -523,6 +584,14 @@ public class SensorFirst extends JPanel implements ActionListener{
 						}else if(sensors.get(i).sensorType.toUpperCase().equals("HUMIDITY"))
 						{
 							JButton btn = new JButton("H");
+							btn.setBackground(Color.GREEN);
+							btn.setBounds(50, 50,50,50);
+							sensorFirst.panelCorridor2.add(btn);
+							btn.setVisible(true);
+
+						}else if(sensors.get(i).sensorType.toUpperCase().equals("MOVEMENT"))
+						{
+							JButton btn = new JButton("M");
 							btn.setBackground(Color.GREEN);
 							btn.setBounds(50, 50,50,50);
 							sensorFirst.panelCorridor2.add(btn);
@@ -548,7 +617,16 @@ public class SensorFirst extends JPanel implements ActionListener{
 							sensorFirst.panelCorridor2.add(btn);
 							btn.setVisible(true);
 
-						}else {}
+						}else if(sensors.get(i).sensorType.toUpperCase().equals("MOVEMENT"))
+						{
+							JButton btn = new JButton("M");
+							btn.setBackground(Color.GRAY);
+							btn.setBounds(50, 50,50,50);
+							sensorFirst.panelCorridor2.add(btn);
+							btn.setVisible(true);
+
+						}
+						else {}
 
 					}else if(sensors.get(i).state.toUpperCase().equals("ALERTE"))
 					{
@@ -576,6 +654,18 @@ public class SensorFirst extends JPanel implements ActionListener{
 							txtSensor.setVisible(true);
 							textState.setVisible(true);
 
+						}else if(sensors.get(i).sensorType.toUpperCase().equals("MOVEMENT"))
+						{
+							JButton btn = new JButton("M");
+							btn.setBackground(Color.RED);
+							btn.setBounds(50, 50,50,50);
+							sensorFirst.panelCorridor2.add(btn);
+							btn.setVisible(true);
+							btnArrterLalerte.setVisible(true);
+							txtDesCapteurs.setVisible(true);
+							txtSensor.setVisible(true);
+							textState.setVisible(true);
+
 						}else {}
 
 					}else
@@ -583,7 +673,7 @@ public class SensorFirst extends JPanel implements ActionListener{
 
 					}
 
-				}else if(	sensors.get(i).location.toUpperCase().equals("KITCHEN"))
+				}else if(	sensors.get(i).location.toUpperCase().trim().equals("KITCHEN"))
 				{
 					if(sensors.get(i).state.toUpperCase().equals("ON"))
 					{
@@ -598,6 +688,14 @@ public class SensorFirst extends JPanel implements ActionListener{
 						}else if(sensors.get(i).sensorType.toUpperCase().equals("HUMIDITY"))
 						{
 							JButton btn = new JButton("H");
+							btn.setBackground(Color.GREEN);
+							btn.setBounds(30, 30,30,30);
+							sensorFirst.kitchen.add(btn);
+							btn.setVisible(true);
+
+						}else if(sensors.get(i).sensorType.toUpperCase().equals("MOVEMENT"))
+						{
+							JButton btn = new JButton("M");
 							btn.setBackground(Color.GREEN);
 							btn.setBounds(30, 30,30,30);
 							sensorFirst.kitchen.add(btn);
@@ -623,6 +721,14 @@ public class SensorFirst extends JPanel implements ActionListener{
 							sensorFirst.kitchen.add(btn);
 							btn.setVisible(true);
 
+						}else if(sensors.get(i).sensorType.toUpperCase().equals("MOVEMENT"))
+						{
+							JButton btn = new JButton("M");
+							btn.setBackground(Color.GRAY);
+							btn.setBounds(30, 30,30,30);
+							sensorFirst.kitchen.add(btn);
+							btn.setVisible(true);
+
 						}else {}
 
 					}else if(sensors.get(i).state.toUpperCase().equals("ALERTE"))
@@ -639,9 +745,9 @@ public class SensorFirst extends JPanel implements ActionListener{
 							txtSensor.setVisible(true);
 							textState.setVisible(true);
 
-						}else if(sensors.get(i).sensorType.toUpperCase().equals("HUMIDITY"))
+						}else if(sensors.get(i).sensorType.toUpperCase().equals("MOVEMENT"))
 						{
-							JButton btn = new JButton("H");
+							JButton btn = new JButton("M");
 							btn.setBackground(Color.RED);
 							btn.setBounds(30, 30,30,30);
 							sensorFirst.kitchen.add(btn);
@@ -658,7 +764,7 @@ public class SensorFirst extends JPanel implements ActionListener{
 
 					}
 
-				}else if(	sensors.get(i).location.toUpperCase().equals("LIBRARY"))
+				}else if(	sensors.get(i).location.toUpperCase().trim().equals("LIBRARY"))
 				{
 					if(sensors.get(i).state.toUpperCase().equals("ON"))
 					{
@@ -673,6 +779,14 @@ public class SensorFirst extends JPanel implements ActionListener{
 						}else if(sensors.get(i).sensorType.toUpperCase().equals("HUMIDITY"))
 						{
 							JButton btn = new JButton("H");
+							btn.setBackground(Color.GREEN);
+							btn.setBounds(30, 30,30,30);
+							sensorFirst.panelLibrary.add(btn);
+							btn.setVisible(true);
+
+						}else if(sensors.get(i).sensorType.toUpperCase().equals("MOVEMENT"))
+						{
+							JButton btn = new JButton("M");
 							btn.setBackground(Color.GREEN);
 							btn.setBounds(30, 30,30,30);
 							sensorFirst.panelLibrary.add(btn);
@@ -697,6 +811,13 @@ public class SensorFirst extends JPanel implements ActionListener{
 							btn.setBounds(30, 30,30,30);
 							sensorFirst.panelLibrary.add(btn);
 							btn.setVisible(true);
+						}else if(sensors.get(i).sensorType.toUpperCase().equals("MOVEMENT"))
+						{
+							JButton btn = new JButton("M");
+							btn.setBackground(Color.GRAY);
+							btn.setBounds(30, 30,30,30);
+							sensorFirst.panelLibrary.add(btn);
+							btn.setVisible(true);
 						}else {}
 
 					}else if(sensors.get(i).state.toUpperCase().equals("ALERTE"))
@@ -725,6 +846,18 @@ public class SensorFirst extends JPanel implements ActionListener{
 							txtSensor.setVisible(true);
 							textState.setVisible(true);
 
+						}else if(sensors.get(i).sensorType.toUpperCase().equals("MOVEMENT"))
+						{
+							JButton btn = new JButton("M");
+							btn.setBackground(Color.RED);
+							btn.setBounds(30, 30,30,30);
+							sensorFirst.panelLibrary.add(btn);
+							btn.setVisible(true);
+							btnArrterLalerte.setVisible(true);
+							txtDesCapteurs.setVisible(true);
+							txtSensor.setVisible(true);
+							textState.setVisible(true);
+
 						}else {}
 
 					}else
@@ -732,7 +865,7 @@ public class SensorFirst extends JPanel implements ActionListener{
 
 					}
 
-				}else if(	sensors.get(i).location.toUpperCase().equals("LIVINGROOM"))
+				}else if(	sensors.get(i).location.toUpperCase().trim().equals("LIVINGROOM"))
 				{
 					if(sensors.get(i).state.toUpperCase().equals("ON"))
 					{
@@ -747,6 +880,14 @@ public class SensorFirst extends JPanel implements ActionListener{
 						}else if(sensors.get(i).sensorType.toUpperCase().equals("HUMIDITY"))
 						{
 							JButton btn = new JButton("H");
+							btn.setBackground(Color.GREEN);
+							btn.setBounds(30, 30,30,30);
+							sensorFirst.panelLivingRoom.add(btn);
+							btn.setVisible(true);
+
+						}else if(sensors.get(i).sensorType.toUpperCase().equals("MOVEMENT"))
+						{
+							JButton btn = new JButton("M");
 							btn.setBackground(Color.GREEN);
 							btn.setBounds(30, 30,30,30);
 							sensorFirst.panelLivingRoom.add(btn);
@@ -772,6 +913,14 @@ public class SensorFirst extends JPanel implements ActionListener{
 							sensorFirst.panelLivingRoom.add(btn);
 							btn.setVisible(true);
 
+						}else if(sensors.get(i).sensorType.toUpperCase().equals("MOVEMENT"))
+						{
+							JButton btn = new JButton("M");
+							btn.setBackground(Color.GRAY);
+							btn.setBounds(30, 30,30,30);
+							sensorFirst.panelLivingRoom.add(btn);
+							btn.setVisible(true);
+
 						}else {}
 
 					}else if(sensors.get(i).state.toUpperCase().equals("ALERTE"))
@@ -791,6 +940,18 @@ public class SensorFirst extends JPanel implements ActionListener{
 						}else if(sensors.get(i).sensorType.toUpperCase().equals("HUMIDITY"))
 						{
 							JButton btn = new JButton("H");
+							btn.setBackground(Color.RED);
+							btn.setBounds(30, 30,30,30);
+							sensorFirst.panelLivingRoom.add(btn);
+							btn.setVisible(true);
+							btnArrterLalerte.setVisible(true);
+							txtDesCapteurs.setVisible(true);
+							txtSensor.setVisible(true);
+							textState.setVisible(true);
+
+						}else if(sensors.get(i).sensorType.toUpperCase().equals("MOVEMENT"))
+						{
+							JButton btn = new JButton("M");
 							btn.setBackground(Color.RED);
 							btn.setBounds(30, 30,30,30);
 							sensorFirst.panelLivingRoom.add(btn);
